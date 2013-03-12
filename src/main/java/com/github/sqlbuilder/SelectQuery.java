@@ -11,13 +11,24 @@ public class SelectQuery {
 
 	private Collection<String> froms;
 
+	private Collection<String> wheres;
+
 	public SelectQuery() {
 		columns = new LinkedList<String>();
 		froms = new LinkedList<String>();
+		wheres = new LinkedList<String>();
 	}
 
 	public SelectQuery addFrom(String from) {
 		froms.add(from);
+		return this;
+	}
+
+	public SelectQuery addFrom(String... froms) {
+		for (String from : froms) {
+			addFrom(from);
+		}
+
 		return this;
 	}
 
@@ -26,12 +37,25 @@ public class SelectQuery {
 		return this;
 	}
 
-	public SelectQuery addColumns(String... columns) {
+	public SelectQuery addColumn(String... columns) {
 		for (String column : columns) {
 			addColumn(column);
 		}
 
 		return this;
+	}
+
+	public SelectQuery addWhere(String where) {
+		wheres.add(where);
+		return this;
+	}
+
+	public SelectQuery and(String where) {
+		return addWhere("AND " + where);
+	}
+
+	public SelectQuery or(String where) {
+		return addWhere("OR " + where);
 	}
 
 	@Override
@@ -54,6 +78,11 @@ public class SelectQuery {
 			throw new IllegalQueryException("No 'from' informed!");
 		} else {
 			result.append(StringUtils.join(froms, ", "));
+		}
+
+		if (!wheres.isEmpty()) {
+			result.append(" WHERE ");
+			result.append(StringUtils.join(wheres, " "));
 		}
 
 		return result.toString();

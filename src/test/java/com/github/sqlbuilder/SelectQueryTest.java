@@ -50,7 +50,7 @@ public class SelectQueryTest {
 	@Test
 	public void shouldCreateQueryUsingColumnsAndFroms() throws Exception {
 		// Given
-		SelectQuery query = new SelectQuery().addColumns("name", "product_id",  "password")
+		SelectQuery query = new SelectQuery().addColumn("name", "product_id",  "password")
 											 .addFrom("users")
 											 .addFrom("products");
 
@@ -65,11 +65,58 @@ public class SelectQueryTest {
 	@Test(expected = IllegalQueryException.class)
 	public void shouldThrowErrorIfNoFromIsPassed() throws Exception {
 		// Given
-		SelectQuery query = new SelectQuery().addColumns("name");
+		SelectQuery query = new SelectQuery().addColumn("name");
 
 		// Then
 		query.toString();
 
+	}
+
+	@Test
+	public void shouldCreateQueryUsingWhere() throws Exception {
+		// Given
+		SelectQuery query = new SelectQuery().addColumn("address")
+											 .addFrom("customers")
+											 .addWhere("age > 40");
+
+		// Then
+		String actual = query.toString();
+
+		// Then
+		String expected = "SELECT address FROM customers WHERE age > 40";
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void shouldCreateQueryUsingANDOperator() throws Exception {
+		// Given
+		SelectQuery query = new SelectQuery().addColumn("name")
+											 .addFrom("employess")
+											 .addWhere("birthday = '01/01/1900'")
+											 .and("sector = 'SALES'");
+
+		// Then
+		String actual = query.toString();
+
+		// Then
+		String expected = "SELECT name FROM employess WHERE birthday = '01/01/1900' AND sector = 'SALES'";
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void shouldCreateQueryUsingOROperator() throws Exception {
+		// Given
+		SelectQuery query = new SelectQuery().addColumn("name")
+											 .addFrom("cities")
+											 .addWhere("state = 'TEXAS'")
+											 .or("state = 'CALIFORNIA'");
+
+		// Then
+		String actual = query.toString();
+
+		// Then
+		String expected = "SELECT name FROM cities WHERE state = 'TEXAS' OR state = 'CALIFORNIA'";
+		assertEquals(expected, actual);
 	}
 
 }
