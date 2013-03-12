@@ -1,7 +1,10 @@
 package com.github.sqlbuilder;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -13,10 +16,13 @@ public class SelectQuery {
 
 	private Collection<String> wheres;
 
+	private Map<String, String> joins;
+
 	public SelectQuery() {
 		columns = new LinkedList<String>();
 		froms = new LinkedList<String>();
 		wheres = new LinkedList<String>();
+		joins = new LinkedHashMap<String, String>();
 	}
 
 	public SelectQuery addFrom(String from) {
@@ -58,6 +64,21 @@ public class SelectQuery {
 		return addWhere("OR " + where);
 	}
 
+	public SelectQuery join(String join, String on) {
+		joins.put("JOIN " + join, on);
+		return this;
+	}
+
+	public SelectQuery innerJoin(String join, String on) {
+		joins.put("INNER JOIN " + join, on);
+		return this;
+	}
+
+	public SelectQuery outterJoin(String join, String on) {
+		joins.put("OUTTER JOIN " + join, on);
+		return this;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
@@ -80,6 +101,10 @@ public class SelectQuery {
 			result.append(StringUtils.join(froms, ", "));
 		}
 
+		for (Entry<String, String> entry : joins.entrySet()) {
+			result.append(" " + entry.getKey() + " ON " + entry.getValue());
+		}
+
 		if (!wheres.isEmpty()) {
 			result.append(" WHERE ");
 			result.append(StringUtils.join(wheres, " "));
@@ -87,5 +112,6 @@ public class SelectQuery {
 
 		return result.toString();
 	}
+
 
 }

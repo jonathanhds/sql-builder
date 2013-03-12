@@ -119,4 +119,49 @@ public class SelectQueryTest {
 		assertEquals(expected, actual);
 	}
 
+	@Test
+	public void shouldCreateQueryUsingJoin() throws Exception {
+		// Given
+		SelectQuery query = new SelectQuery().addColumn("p.name, a.name")
+											 .addFrom("persons p")
+											 .join("address a", "a.id = p.address_id");
+
+		// Then
+		String actual = query.toString();
+
+		// Then
+		String expected = "SELECT p.name, a.name FROM persons p JOIN address a ON a.id = p.address_id";
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void shouldCreateQueryUsingInnerJoin() throws Exception {
+		// Given
+		SelectQuery query = new SelectQuery().addColumn("p.name, a.name")
+											 .addFrom("persons p")
+											 .innerJoin("address a", "a.id = p.address_id");
+
+		// Then
+		String actual = query.toString();
+
+		// Then
+		String expected = "SELECT p.name, a.name FROM persons p INNER JOIN address a ON a.id = p.address_id";
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void shouldCreateQueryUsingopoOutterJoin() throws Exception {
+		// Given
+		SelectQuery query = new SelectQuery().addColumn("p.name, a.name")
+											 .addFrom("persons p")
+											 .outterJoin("address a", "a.id = p.address_id");
+
+		// Then
+		String actual = query.toString();
+
+		// Then
+		String expected = "SELECT p.name, a.name FROM persons p OUTTER JOIN address a ON a.id = p.address_id";
+		assertEquals(expected, actual);
+	}
+
 }
