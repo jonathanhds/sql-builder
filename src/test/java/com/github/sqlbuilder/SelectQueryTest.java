@@ -179,4 +179,35 @@ public class SelectQueryTest {
 		assertEquals(expected, actual);
 	}
 
+	@Test
+	public void shouldCreateQueryUsingGroupBy() throws Exception {
+		// Given
+		SelectQuery query = new SelectQuery().addColumn("s.name", "count(s.impediments)")
+											 .addFrom("sprint s")
+											 .groupBy("s.name");
+
+		// Then
+		String actual = query.toString();
+
+		// Then
+		String expected = "SELECT s.name, count(s.impediments) FROM sprint s GROUP BY s.name";
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void shouldCreateQueryUsingHaving() throws Exception {
+		// Given
+		SelectQuery query = new SelectQuery().addColumn("s.name", "count(s.impediments) AS total_impediemnts")
+											 .addFrom("sprint s")
+											 .groupBy("s.name")
+											 .having("total_impediemnts > 5");
+
+		// Then
+		String actual = query.toString();
+
+		// Then
+		String expected = "SELECT s.name, count(s.impediments) AS total_impediemnts FROM sprint s GROUP BY s.name HAVING total_impediemnts > 5";
+		assertEquals(expected, actual);
+	}
+
 }

@@ -18,14 +18,20 @@ public class SelectQuery {
 
 	private Map<String, String> joins;
 
+	private Collection<String> groups;
+
 	private Collection<String> orders;
+
+	private Collection<String> havings;
 
 	public SelectQuery() {
 		columns = new LinkedList<String>();
 		froms = new LinkedList<String>();
 		wheres = new LinkedList<String>();
 		joins = new LinkedHashMap<String, String>();
+		groups = new LinkedList<String>();
 		orders = new LinkedList<String>();
+		havings = new LinkedList<String>();
 	}
 
 	public SelectQuery addFrom(String from) {
@@ -82,9 +88,25 @@ public class SelectQuery {
 		return this;
 	}
 
+	public SelectQuery groupBy(String... groups) {
+		for (String group : groups) {
+			this.groups.add(group);
+		}
+
+		return this;
+	}
+
 	public SelectQuery orderBy(String... orders) {
-		for (String group : orders) {
-			this.orders.add(group);
+		for (String order : orders) {
+			this.orders.add(order);
+		}
+
+		return this;
+	}
+
+	public SelectQuery having(String... havings) {
+		for (String having : havings) {
+			this.havings.add(having);
 		}
 
 		return this;
@@ -119,6 +141,16 @@ public class SelectQuery {
 		if (!wheres.isEmpty()) {
 			result.append(" WHERE ");
 			result.append(StringUtils.join(wheres, " "));
+		}
+
+		if (!groups.isEmpty()) {
+			result.append(" GROUP BY ");
+			result.append(StringUtils.join(groups, ", "));
+		}
+
+		if (!havings.isEmpty()) {
+			result.append(" HAVING ");
+			result.append(StringUtils.join(havings, ", "));
 		}
 
 		if (!orders.isEmpty()) {
