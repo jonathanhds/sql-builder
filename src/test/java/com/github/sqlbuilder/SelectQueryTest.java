@@ -164,4 +164,19 @@ public class SelectQueryTest {
 		assertEquals(expected, actual);
 	}
 
+	@Test
+	public void shouldCreateQueryUsingOrderBy() throws Exception {
+		// Given
+		SelectQuery query = new SelectQuery().addColumn("p.name, p.age")
+											 .addFrom("persons p")
+											 .orderBy("p.name", "p.age");
+
+		// Then
+		String actual = query.toString();
+
+		// Then
+		String expected = "SELECT p.name, p.age FROM persons p ORDER BY p.name, p.age";
+		assertEquals(expected, actual);
+	}
+
 }

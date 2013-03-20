@@ -18,11 +18,14 @@ public class SelectQuery {
 
 	private Map<String, String> joins;
 
+	private Collection<String> orders;
+
 	public SelectQuery() {
 		columns = new LinkedList<String>();
 		froms = new LinkedList<String>();
 		wheres = new LinkedList<String>();
 		joins = new LinkedHashMap<String, String>();
+		orders = new LinkedList<String>();
 	}
 
 	public SelectQuery addFrom(String from) {
@@ -79,6 +82,14 @@ public class SelectQuery {
 		return this;
 	}
 
+	public SelectQuery orderBy(String... orders) {
+		for (String group : orders) {
+			this.orders.add(group);
+		}
+
+		return this;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
@@ -110,8 +121,12 @@ public class SelectQuery {
 			result.append(StringUtils.join(wheres, " "));
 		}
 
+		if (!orders.isEmpty()) {
+			result.append(" ORDER BY ");
+			result.append(StringUtils.join(orders, ", "));
+		}
+
 		return result.toString();
 	}
-
 
 }
