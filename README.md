@@ -3,6 +3,8 @@ SQL Builder
 
 A dynamic SQL builder for Java language.
 
+[![Build Status](https://secure.travis-ci.org/jonathanhds/sql-builder.png?branch=master)](http://travis-ci.org/jonathanhds/sql-builder)
+
 Examples
 --------
 
