@@ -12,12 +12,10 @@ Select
 -------
 ```java
 SelectQuery query = new SelectQuery().addColumn("s.name")
-                                 .addColumn("count(s.impediments) AS total_impediemnts")
-                                 .addFrom("sprint s")
-                                 .groupBy("s.name")
-                                 .having("total_impediemnts > 5");
-  
-System.out.println(select.toString());
+                                     .addColumn("count(s.impediments) AS total_impediemnts")
+                                     .addFrom("sprint s")
+                                     .groupBy("s.name")
+                                     .having("total_impediemnts > 5");
 ```
 
 The output is:
@@ -29,7 +27,7 @@ Delete
 -------
 ```java
 DeleteQuery query = new DeleteQuery("account a").addWhere("a.id > 666")
-                                                                                    .addWhere("a.creation_date > '2013-01-01'");
+                                                .addWhere("a.creation_date > '2013-01-01'");
 ```
 
 The output is:
@@ -41,8 +39,8 @@ Update
 ---------
 ```java
 UpdateQuery query = new UpdateQuery("employee e").set("e.salary", "50000")
-                                                                                             .addWhere("e.age > 40")
-                                             .addWhere("e.genre = 'female'");
+                                                 .addWhere("e.age > 40")
+                                                 .addWhere("e.genre = 'female'");
 ```
 
 The output is:
@@ -55,10 +53,10 @@ Insert
 -------
 ```java
 InsertQuery query = new InsertQuery("persons").columns("id", "name", "age")
-                                                                                  .values(1, "foo", 30)
-                                                                                  .values(2, "bar", 23)
-                                                                                  .values(3, "hello", 54)
-                                                                                  .values(4, "world", 19);
+                                              .values(1, "foo", 30)
+                                              .values(2, "bar", 23)
+                                              .values(3, "hello", 54)
+                                              .values(4, "world", 19);
 ```
 
 The output is:
@@ -73,8 +71,8 @@ Declare this repository in your pom.xml file:
 
 ```xml
 <repository>
-<id>sql-builder</id>
-<url>https://github.com/jonathanhds/sql-builder/raw/master</url>
+    <id>sql-builder</id>
+    <url>https://github.com/jonathanhds/sql-builder/raw/master</url>
 </repository>
 ```
 
