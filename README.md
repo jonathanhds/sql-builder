@@ -21,7 +21,15 @@ SelectQuery query = new SelectQuery().addColumn("s.name")
 The output is:
 
 ```sql
-SELECT s.name, count(s.impediments) AS total_impediemnts FROM sprint s GROUP BY s.name HAVING total_impediemnts > 5
+SELECT
+    s.name,
+    count(s.impediments) AS total_impediemnts
+FROM
+    sprint s
+GROUP BY
+    s.name
+HAVING
+    total_impediemnts > 5
 ```
 Delete
 -------
@@ -33,7 +41,12 @@ DeleteQuery query = new DeleteQuery("account a").addWhere("a.id > 666")
 The output is:
 
 ```sql
-DELETE FROM account a WHERE a.id > 666 AND a.creation_date > '2013-01-01'
+DELETE
+FROM
+    account a
+WHERE
+    a.id > 666
+    AND a.creation_date > '2013-01-01'
 ```
 Update
 ---------
@@ -46,7 +59,13 @@ UpdateQuery query = new UpdateQuery("employee e").set("e.salary", "50000")
 The output is:
 
 ```sql
-UPDATE employee e SET e.salary = '50000' WHERE e.age > 40 AND e.genre = 'female'
+UPDATE
+    employee e
+SET
+    e.salary = '50000'
+WHERE
+    e.age > 40
+    AND e.genre = 'female'
 ```
 
 Insert
@@ -62,7 +81,13 @@ InsertQuery query = new InsertQuery("persons").columns("id", "name", "age")
 The output is:
 
 ```sql
-INSERT INTO persons (id, name, age) VALUES (1, 'foo', 30), (2, 'bar', 23), (3, 'hello', 54), (4, 'world', 19)
+INSERT INTO
+    persons (id, name, age)
+VALUES
+    (1, 'foo', 30),
+    (2, 'bar', 23),
+    (3, 'hello', 54),
+    (4, 'world', 19)
 ```
 
 Usage
