@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.github.sqlbuilder.support.Country;
@@ -187,6 +188,7 @@ public class SelectTest {
 	}
 
 	@Test
+	@Ignore("Found a generic solution to pagination")
 	public void selectAllFromTableWithPagination() throws Exception {
 		List<Person> persons = new QueryBuilder(connection).select()
 														   .all()
