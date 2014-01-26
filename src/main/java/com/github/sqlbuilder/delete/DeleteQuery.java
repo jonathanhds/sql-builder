@@ -1,4 +1,4 @@
-package com.github.sqlbuilder;
+package com.github.sqlbuilder.delete;
 
 import java.util.Collection;
 import java.util.LinkedList;

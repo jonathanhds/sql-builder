@@ -1,8 +1,10 @@
-package com.github.sqlbuilder;
+package com.github.sqlbuilder.insert;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import com.github.sqlbuilder.IllegalQueryException;
 
 
 public class InsertQueryTest {

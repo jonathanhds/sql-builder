@@ -1,8 +1,11 @@
-package com.github.sqlbuilder;
+package com.github.sqlbuilder.update;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.github.sqlbuilder.IllegalQueryException;
+import com.github.sqlbuilder.update.UpdateQuery;
 
 public class UpdateQueryTest {
 

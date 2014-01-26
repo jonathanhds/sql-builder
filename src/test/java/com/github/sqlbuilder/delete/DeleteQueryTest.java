@@ -1,8 +1,10 @@
-package com.github.sqlbuilder;
+package com.github.sqlbuilder.delete;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import com.github.sqlbuilder.delete.DeleteQuery;
 
 
 public class DeleteQueryTest {

@@ -1,4 +1,4 @@
-package com.github.sqlbuilder;
+package com.github.sqlbuilder.update;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
+
+import com.github.sqlbuilder.IllegalQueryException;
 
 public class UpdateQuery {
 
