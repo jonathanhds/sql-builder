@@ -11,11 +11,15 @@ Some usage examples:
 Select
 -------
 ```java
-SelectQuery query = new SelectQuery().addColumn("s.name")
-                                     .addColumn("count(s.impediments) AS total_impediemnts")
-                                     .addFrom("sprint s")
-                                     .groupBy("s.name")
-                                     .having("total_impediemnts > 5");
+QueryBuilder query = new QueryBuilder().select()
+                                       .column("s.name")
+                                       .column("count(s.impediments) AS total_impediments")
+                                       .from()
+                                       .table("sprint s")
+                                       .groupBy()
+                                       .column("s.name")
+                                       .having()
+                                       .column("total_impediments > 5")
 ```
 
 The output is:
