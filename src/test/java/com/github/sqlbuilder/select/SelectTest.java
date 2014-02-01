@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.github.sqlbuilder.support.Country;
@@ -36,6 +35,7 @@ public class SelectTest {
 	@Before
 	public void startConnection() throws Exception {
 		connection = new MemoryDatabase().getConnection();
+		connection.createStatement().executeQuery("SET DATABASE SQL SYNTAX ORA FALSE");
 	}
 
 	@After
@@ -49,7 +49,7 @@ public class SelectTest {
 
 	@Test
 	public void selectAllFromTable() throws Exception {
-		List<Person> persons = new QueryBuilder(connection).select()
+		List<Person> persons = new QueryBuilderHSQLDB(connection).select()
 														   .all()
 														   .from()
 														   .table("PERSON p")
@@ -64,7 +64,7 @@ public class SelectTest {
 
 	@Test
 	public void selectAllFromTableWhereConditions() throws Exception {
-		List<Person> persons = new QueryBuilder(connection).select()
+		List<Person> persons = new QueryBuilderHSQLDB(connection).select()
 														   .all()
 														   .from()
 														   .table("PERSON p")
@@ -80,7 +80,7 @@ public class SelectTest {
 	
 	@Test
 	public void selectAllFromTableWhereConditionWithParameter() throws Exception {
-		List<Person> persons = new QueryBuilder(connection).select()
+		List<Person> persons = new QueryBuilderHSQLDB(connection).select()
 														   .all()
 														   .from()
 														   .table("PERSON p")
@@ -97,7 +97,7 @@ public class SelectTest {
 
 	@Test
 	public void selectAllFromTableWhereBetween() throws Exception {
-		List<Person> persons = new QueryBuilder(connection).select()
+		List<Person> persons = new QueryBuilderHSQLDB(connection).select()
 														   .all()
 														   .from()
 														   .table("PERSON p")
@@ -114,7 +114,7 @@ public class SelectTest {
 	
 	@Test
 	public void selectColumnsFromTableJoinAnotherTable() throws Exception {
-		List<Person> persons = new QueryBuilder(connection).select()
+		List<Person> persons = new QueryBuilderHSQLDB(connection).select()
 														   .column("p.name")
 														   .column("p.birthday")
 														   .column("p.country_id")
@@ -133,7 +133,7 @@ public class SelectTest {
 	
 	@Test
 	public void selectAllFromTableOrderBy() throws Exception {
-		List<Person> persons = new QueryBuilder(connection).select()
+		List<Person> persons = new QueryBuilderHSQLDB(connection).select()
 														   .all()
 														   .from()
 														   .table("PERSON p")
@@ -150,7 +150,7 @@ public class SelectTest {
 	
 	@Test
 	public void selectAllFromTableSingleResult() throws Exception {
-		Person person = new QueryBuilder(connection).select()
+		Person person = new QueryBuilderHSQLDB(connection).select()
 													.all()
 													.from()
 													.table("PERSON p")
@@ -163,7 +163,7 @@ public class SelectTest {
 
 	@Test(expected = SQLException.class)
 	public void selectAllFromTableSingleResult_throwExceptionIfMoreThanOneResultIsReturned() throws Exception {
-		new QueryBuilder(connection).select()
+		new QueryBuilderHSQLDB(connection).select()
 									.all()
 									.from()
 									.table("PERSON p")
@@ -172,7 +172,7 @@ public class SelectTest {
 
 	@Test
 	public void selectAllFromTableGroupBy() throws Exception {
-		List<Integer> counts = new QueryBuilder(connection).select()
+		List<Integer> counts = new QueryBuilderHSQLDB(connection).select()
 														   .count("*")
 														   .from()
 														   .table("PERSON p")
@@ -188,20 +188,37 @@ public class SelectTest {
 	}
 
 	@Test
-	@Ignore("Found a generic solution to pagination")
-	public void selectAllFromTableWithPagination() throws Exception {
-		List<Person> persons = new QueryBuilder(connection).select()
+	public void selectAllFromTableWithPagination_Oracle() throws Exception {
+		connection.createStatement().executeQuery("SET DATABASE SQL SYNTAX ORA TRUE");
+		List<Person> persons = new QueryBuilderOracle(connection).select()
 														   .all()
 														   .from()
 														   .table("PERSON p")
 														   .orderBy()
-														   .column("p.name")
+														   .column("p.name", OrderByType.ASC)
 														   .limit(0, 1)
 														   .list(new PersonRowMapper());
 
 		assertThat(persons, hasSize(1));
 		assertThat(persons, containsInAnyOrder(
-			new Person("Jonathan", toDate(1988, 11, 8), brazil())
+			new Person("Jonathan", toDate(1988, 11, 8), null)
+		));
+	}
+	
+	@Test
+	public void selectAllFromTableWithPagination_HSQLDB() throws Exception {
+		List<Person> persons = new QueryBuilderHSQLDB(connection).select()
+														   .all()
+														   .from()
+														   .table("PERSON p")
+														   .orderBy()
+														   .column("p.name", OrderByType.ASC)
+														   .limit(0, 1)
+														   .list(new PersonRowMapper());
+
+		assertThat(persons, hasSize(1));
+		assertThat(persons, containsInAnyOrder(
+			new Person("Jonathan", toDate(1988, 11, 8), null)
 		));
 	}
 

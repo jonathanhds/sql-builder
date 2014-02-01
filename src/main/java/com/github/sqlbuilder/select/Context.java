@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 class Context {
 
@@ -14,15 +16,25 @@ class Context {
 	private final StringBuilder sql;
 
 	private final List<Object> parameters;
+	
+	private final Database database;
+	
+	private transient final Logger log;
+	
+	{
+		this.log = Logger.getLogger(getClass().getName());
+	}
 
 	Context(Context clone) {
 		this.connection = clone.connection;
 		this.parameters = new LinkedList<Object>(clone.parameters);
 		this.sql = new StringBuilder();
+		this.database = clone.database;
 	}
 
-	Context(Connection connection) {
+	Context(Database database, Connection connection) {
 		this.connection = connection;
+		this.database = database;
 		sql = new StringBuilder();
 		parameters = new LinkedList<>();
 	}
@@ -72,8 +84,13 @@ class Context {
 			this.parameters.add(parameter);
 		}
 	}
+	
+	Database getDatabase() {
+		return database;
+	}
 
 	private ResultSet execute(String sql) throws SQLException {
+		log.log(Level.INFO, "\n"+sql);
 		try (PreparedStatement statement = prepareStatement(sql)) {
 			return statement.executeQuery();
 		}

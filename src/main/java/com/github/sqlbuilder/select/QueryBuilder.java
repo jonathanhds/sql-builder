@@ -9,12 +9,12 @@ public class QueryBuilder {
 
 	private final Context context;
 
-	public QueryBuilder(DataSource dataSource) throws SQLException {
-		this(dataSource.getConnection());
+	public QueryBuilder(Database database, DataSource dataSource) throws SQLException {
+		this(database, dataSource.getConnection());
 	}
 
-	public QueryBuilder(Connection connection) {
-		this.context = new Context(connection);
+	public QueryBuilder(Database database, Connection connection) {
+		this.context = new Context(database, connection);
 	}
 
 	public Select select() {
