@@ -96,16 +96,7 @@ VALUES
 
 Usage
 =======
-Declare this repository in your pom.xml file:
-
-```xml
-<repository>
-    <id>sql-builder</id>
-    <url>https://github.com/jonathanhds/sql-builder/raw/master</url>
-</repository>
-```
-
-And add this dependency:
+To use this library, add this dependency on your pom.xml:
 
 ```xml
 <dependency>
