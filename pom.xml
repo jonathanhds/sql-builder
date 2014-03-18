@@ -17,9 +17,9 @@
 	</properties>
 
     <scm>
-        <connection>scm:git:git@github.com:jonathanhds/sql-builder.git</connection>
-        <developerConnection>scm:git:git@github.com:jonathanhds/sql-builder.git</developerConnection>
-        <url>git@github.com:jonathanhds/sql-builder.git</url>
+        <url>https://github.com/jonathanhds/sql-builder</url>
+        <connection>scm:git:ssh://git@github.com/jonathanhds/sql-builder.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/jonathanhds/sql-builder.git</developerConnection>
     </scm>
 
     <licenses>
