@@ -102,6 +102,6 @@ To use this library, add this dependency on your pom.xml:
 <dependency>
     <groupId>com.github.jonathanhds</groupId>
     <artifactId>sql-builder</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
 </dependency>
 ```
