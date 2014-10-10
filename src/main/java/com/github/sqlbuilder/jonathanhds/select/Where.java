@@ -3,15 +3,17 @@ package com.github.sqlbuilder.jonathanhds.select;
 import java.sql.SQLException;
 import java.util.List;
 
-public class Where implements TerminalExpression {
+public class Where extends Condition implements TerminalExpression {
 
-	private Context context;
-
-	public Where(Context context) {
-		this.context = context;
-		context.append("WHERE");
-		context.append("1 = 1");
+	Where(Context context) {
+        super(context);
+        add("1 = 1");
 	}
+
+    Where(Context context, String condition) {
+        super(context);
+        add(condition);
+    }
 
 	public OrderBy orderBy() {
 		return new OrderBy(context);
@@ -81,4 +83,8 @@ public class Where implements TerminalExpression {
 		return context.single(rowMapper);
 	}
 
+    @Override
+    protected String getPrefix() {
+        return "WHERE";
+    }
 }

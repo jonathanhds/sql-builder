@@ -20,6 +20,10 @@ public class From implements TerminalExpression {
 	public Where where() {
 		return new Where(context);
 	}
+
+    public Where where(String condition) {
+        return new Where(context, condition);
+    }
 	
 	public GroupBy groupBy() {
 		return new GroupBy(context);

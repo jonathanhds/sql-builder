@@ -76,6 +76,18 @@ public class SelectTest {
 		assertThat(persons, containsInAnyOrder(
 			new Person("Jonathan", toDate(1988, 11, 8), null)
 		));
+
+        persons = new QueryBuilderHSQLDB(connection).select()
+														   .all()
+														   .from()
+														   .table("PERSON p")
+														   .where("p.name = 'Jonathan'")
+														   .list(new PersonRowMapper());
+
+		assertThat(persons, hasSize(1));
+		assertThat(persons, containsInAnyOrder(
+			new Person("Jonathan", toDate(1988, 11, 8), null)
+		));
 	}
 	
 	@Test
