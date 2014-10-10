@@ -5,7 +5,7 @@ import org.apache.commons.lang.StringUtils;
 
 abstract class Condition {
 
-	private final Context context;
+	protected final Context context;
 
 	Condition(Context context) {
 		this.context = context;

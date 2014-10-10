@@ -76,6 +76,18 @@ public class SelectTest {
 		assertThat(persons, containsInAnyOrder(
 			new Person("Jonathan", toDate(1988, 11, 8), null)
 		));
+
+        persons = new QueryBuilderHSQLDB(connection).select()
+														   .all()
+														   .from()
+														   .table("PERSON p")
+														   .where("p.name = 'Jonathan'")
+														   .list(new PersonRowMapper());
+
+		assertThat(persons, hasSize(1));
+		assertThat(persons, containsInAnyOrder(
+			new Person("Jonathan", toDate(1988, 11, 8), null)
+		));
 	}
 	
 	@Test
@@ -122,6 +134,60 @@ public class SelectTest {
 														   .from()
 														   .table("PERSON p")
 														   .innerJoin("COUNTRY c ON c.id = p.country_id")
+														   .list(new PersonRowMapper());
+		
+		assertThat(persons, hasSize(2));
+		assertThat(persons, containsInAnyOrder(
+			new Person("Jonathan", toDate(1988, 11, 8), brazil()),
+			new Person("Steve Jobs", toDate(1955, 2, 24), usa())
+		));
+
+        persons = new QueryBuilderHSQLDB(connection).select()
+                                                           .columns("p.name", "p.birthday", "p.country_id", "c.country_name")
+														   .from()
+														   .table("PERSON p")
+														   .innerJoin("COUNTRY c ON c.id = p.country_id")
+														   .list(new PersonRowMapper());
+		
+		assertThat(persons, hasSize(2));
+		assertThat(persons, containsInAnyOrder(
+			new Person("Jonathan", toDate(1988, 11, 8), brazil()),
+			new Person("Steve Jobs", toDate(1955, 2, 24), usa())
+		));
+
+        persons = new QueryBuilderHSQLDB(connection).select()
+														   .columns("p.name", "p.birthday", "p.country_id", "c.country_name")
+														   .from()
+														   .table("PERSON p")
+                                                           .table("country c")
+                                                           .where("c.id = p.country_id")
+														   .list(new PersonRowMapper());
+		
+		assertThat(persons, hasSize(2));
+		assertThat(persons, containsInAnyOrder(
+			new Person("Jonathan", toDate(1988, 11, 8), brazil()),
+			new Person("Steve Jobs", toDate(1955, 2, 24), usa())
+		));
+
+        persons = new QueryBuilderHSQLDB(connection).select()
+														   .columns("p.name", "p.birthday", "p.country_id", "c.country_name")
+														   .from()
+														   .tables("PERSON p", "COUNTRY c")
+                                                           .where("c.id = p.country_id")
+														   .list(new PersonRowMapper());
+		
+		assertThat(persons, hasSize(2));
+		assertThat(persons, containsInAnyOrder(
+			new Person("Jonathan", toDate(1988, 11, 8), brazil()),
+			new Person("Steve Jobs", toDate(1955, 2, 24), usa())
+		));
+
+        persons = new QueryBuilderHSQLDB(connection).select()
+														   .columns("p.name", "p.birthday", "p.country_id", "c.country_name")
+														   .from()
+														   .table("PERSON p")
+                                                           .select("select * from country", "c")
+                                                           .where("c.id = p.country_id")
 														   .list(new PersonRowMapper());
 		
 		assertThat(persons, hasSize(2));

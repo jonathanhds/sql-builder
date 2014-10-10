@@ -7,12 +7,12 @@ public abstract class Join implements TerminalExpression {
 
 	private Context context;
 
-	public Join(Context context) {
+	Join(Context context) {
 		this.context = context;
 		context.append(expression());
 	}
 
-	public Join(Context context, String condition) {
+	Join(Context context, String condition) {
 		this(context);
 		context.append(condition);
 	}
@@ -24,6 +24,10 @@ public abstract class Join implements TerminalExpression {
 	public Where where() {
 		return new Where(context);
 	}
+
+    public Where where(String condition) {
+        return new Where(context, condition);
+    }
 	
 	public Limit limit(int start, int size) {
 		return new Limit(context, start, size);
