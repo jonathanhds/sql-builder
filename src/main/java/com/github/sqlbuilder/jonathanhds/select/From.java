@@ -28,6 +28,11 @@ public class From implements TerminalExpression {
         return this;
     }
 
+    public From select(String selectQuery, String alias){
+        this.tables.add("(" + selectQuery + ") " + alias);
+        return this;
+    }
+
 	public Where where() {
         concatenateTables();
 		return new Where(context);

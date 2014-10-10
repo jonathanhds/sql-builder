@@ -181,6 +181,20 @@ public class SelectTest {
 			new Person("Jonathan", toDate(1988, 11, 8), brazil()),
 			new Person("Steve Jobs", toDate(1955, 2, 24), usa())
 		));
+
+        persons = new QueryBuilderHSQLDB(connection).select()
+														   .columns("p.name", "p.birthday", "p.country_id", "c.country_name")
+														   .from()
+														   .table("PERSON p")
+                                                           .select("select * from country", "c")
+                                                           .where("c.id = p.country_id")
+														   .list(new PersonRowMapper());
+		
+		assertThat(persons, hasSize(2));
+		assertThat(persons, containsInAnyOrder(
+			new Person("Jonathan", toDate(1988, 11, 8), brazil()),
+			new Person("Steve Jobs", toDate(1955, 2, 24), usa())
+		));
 	}
 	
 	@Test
