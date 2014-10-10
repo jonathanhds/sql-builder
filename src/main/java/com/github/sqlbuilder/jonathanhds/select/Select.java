@@ -32,6 +32,14 @@ public class Select {
 		return this;
 	}
 
+    public Select columns(String... columns) {
+        for(String column : columns){
+            append(column);
+        }
+
+        return this;
+    }
+
 	public Select count(String column) {
 		append("COUNT(" + column + ")");
 		return this;
