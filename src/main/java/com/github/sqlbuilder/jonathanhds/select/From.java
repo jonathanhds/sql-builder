@@ -3,8 +3,8 @@ package com.github.sqlbuilder.jonathanhds.select;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
+import org.apache.commons.lang.StringUtils;
 
 public class From implements TerminalExpression {
 
@@ -18,7 +18,6 @@ public class From implements TerminalExpression {
 	}
 
 	public From table(String table) {
-//		this.context.append(table);
         tables.add(table);
 		return this;
 	}
@@ -85,17 +84,7 @@ public class From implements TerminalExpression {
 
     private void concatenateTables(){
         final String newLine = System.getProperty("line.separator");
-        Iterator<String> iter = tables.iterator();
-
-        while(iter.hasNext()){
-            String table = iter.next();
-            this.context.append(table);
-
-            if(iter.hasNext()){
-                this.context.append(", ");
-            }
-
-            this.context.append(newLine);
-        }
+        this.context.append(StringUtils.join(tables, "," + newLine));
+        this.context.append(newLine);
     }
 }
