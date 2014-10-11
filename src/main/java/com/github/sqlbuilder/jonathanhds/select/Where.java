@@ -27,6 +27,14 @@ public class Where extends Condition implements TerminalExpression {
 		return new OrderBy(context);
 	}
 
+    public OrderBy orderBy(String... columns){
+        return new OrderBy(context, columns);
+    }
+
+    public OrderBy orderBy(OrderByType order, String... columns){
+        return new OrderBy(context, order, columns);
+    }
+
 	public Where and(Object condition) {
 		new AndCondition(context).add(condition);
 		return this;

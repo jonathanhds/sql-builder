@@ -1,5 +1,6 @@
 package com.github.sqlbuilder.jonathanhds.select;
 
+import static com.github.sqlbuilder.jonathanhds.select.OrderByType.DESC;
 import static java.util.Calendar.DAY_OF_MONTH;
 import static java.util.Calendar.HOUR_OF_DAY;
 import static java.util.Calendar.MILLISECOND;
@@ -24,6 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.github.sqlbuilder.jonathanhds.support.Country;
+import com.github.sqlbuilder.jonathanhds.support.CountryRowMapper;
 import com.github.sqlbuilder.jonathanhds.support.MemoryDatabase;
 import com.github.sqlbuilder.jonathanhds.support.Person;
 import com.github.sqlbuilder.jonathanhds.support.PersonRowMapper;
@@ -304,6 +306,41 @@ public class SelectTest {
 
         assertThat(counts, hasSize(1));
         assertThat(counts, contains(2));
+    }
+
+    @Test
+    public void selectColumnsFromTableGroupByHavingOrderBy() throws Exception {
+        List<Country> countries = new QueryBuilderHSQLDB(connection)
+                .select()
+                .column("c.country_name")
+                .from()
+                .tables("PERSON p", "COUNTRY c")
+                .where("c.id = p.country_id")
+                .groupBy("c.country_name")
+                .having("count(1) > 1")
+                .orderBy("c.country_name", DESC)
+                .list(new CountryRowMapper());
+
+        assertThat(countries, hasSize(1));
+        assertThat(countries, contains(
+                brazil())
+        );
+
+        countries = new QueryBuilderHSQLDB(connection)
+                .select()
+                .column("c.country_name")
+                .from()
+                .tables("PERSON p", "COUNTRY c")
+                .where("c.id = p.country_id")
+                .groupBy("c.country_name")
+                .orderBy("c.country_name", DESC)
+                .list(new CountryRowMapper());
+
+        assertThat(countries, hasSize(2));
+        assertThat(countries, contains(
+                usa(), 
+                brazil())
+        );
     }
 
 	@Test

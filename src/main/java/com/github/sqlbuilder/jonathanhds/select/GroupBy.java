@@ -35,28 +35,48 @@ public class GroupBy implements TerminalExpression {
     }
 
 	public Having having() {
-		end();
+		terminate();
 		return new Having(context);
 	}
 
     public Having having(String condition){
-        end();
+        terminate();
         return new Having(context, condition);
+    }
+
+    public OrderBy orderBy(){
+        terminate();
+        return new OrderBy(context);
+    }
+
+    public OrderBy orderBy(String... columns){
+        terminate();
+        return new OrderBy(context, columns);
+    }
+
+    public OrderBy orderBy(OrderByType order, String... columns){
+        terminate();
+        return new OrderBy(context, order, columns);
+    }
+
+    public OrderBy orderBy(String column, OrderByType order){
+        terminate();
+        return new OrderBy(context, order, column);
     }
 
 	@Override
 	public <E> List<E> list(RowMapper<E> rowMapper) throws SQLException {
-		end();
+		terminate();
 		return context.list(rowMapper);
 	}
 
 	@Override
 	public <E> E single(RowMapper<E> rowMapper) throws SQLException {
-		end();
+		terminate();
 		return context.single(rowMapper);
 	}
 
-	private void end() {
+	private void terminate() {
 		context.append(StringUtils.join(columns, ", "));
 	}
 
