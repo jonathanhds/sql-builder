@@ -55,10 +55,11 @@ public class SelectTest {
 														   .table("PERSON p")
 														   .list(new PersonRowMapper());
 
-		assertThat(persons, hasSize(2));
+		assertThat(persons, hasSize(3));
 		assertThat(persons, containsInAnyOrder(
 			new Person("Jonathan", toDate(1988, 11, 8), null),
-			new Person("Steve Jobs", toDate(1955, 2, 24), null)
+			new Person("Steve Jobs", toDate(1955, 2, 24), null),
+			new Person("Dom Pedro II", toDate(1825, 12, 02), null)
 		));
 	}
 
@@ -136,10 +137,11 @@ public class SelectTest {
 														   .innerJoin("COUNTRY c ON c.id = p.country_id")
 														   .list(new PersonRowMapper());
 		
-		assertThat(persons, hasSize(2));
+		assertThat(persons, hasSize(3));
 		assertThat(persons, containsInAnyOrder(
-			new Person("Jonathan", toDate(1988, 11, 8), brazil()),
-			new Person("Steve Jobs", toDate(1955, 2, 24), usa())
+                jonathan(),
+                steveJobs(),
+                domPedro()
 		));
 
         persons = new QueryBuilderHSQLDB(connection).select()
@@ -149,10 +151,11 @@ public class SelectTest {
 														   .innerJoin("COUNTRY c ON c.id = p.country_id")
 														   .list(new PersonRowMapper());
 		
-		assertThat(persons, hasSize(2));
+		assertThat(persons, hasSize(3));
 		assertThat(persons, containsInAnyOrder(
-			new Person("Jonathan", toDate(1988, 11, 8), brazil()),
-			new Person("Steve Jobs", toDate(1955, 2, 24), usa())
+                jonathan(),
+                steveJobs(),
+                domPedro()
 		));
 
         persons = new QueryBuilderHSQLDB(connection).select()
@@ -163,10 +166,11 @@ public class SelectTest {
                                                            .where("c.id = p.country_id")
 														   .list(new PersonRowMapper());
 		
-		assertThat(persons, hasSize(2));
+		assertThat(persons, hasSize(3));
 		assertThat(persons, containsInAnyOrder(
-			new Person("Jonathan", toDate(1988, 11, 8), brazil()),
-			new Person("Steve Jobs", toDate(1955, 2, 24), usa())
+                jonathan(),
+                steveJobs(),
+                domPedro()
 		));
 
         persons = new QueryBuilderHSQLDB(connection).select()
@@ -176,10 +180,11 @@ public class SelectTest {
                                                            .where("c.id = p.country_id")
 														   .list(new PersonRowMapper());
 		
-		assertThat(persons, hasSize(2));
+		assertThat(persons, hasSize(3));
 		assertThat(persons, containsInAnyOrder(
-			new Person("Jonathan", toDate(1988, 11, 8), brazil()),
-			new Person("Steve Jobs", toDate(1955, 2, 24), usa())
+                jonathan(),
+                steveJobs(),
+                domPedro()
 		));
 
         persons = new QueryBuilderHSQLDB(connection).select()
@@ -190,10 +195,11 @@ public class SelectTest {
                                                            .where("c.id = p.country_id")
 														   .list(new PersonRowMapper());
 		
-		assertThat(persons, hasSize(2));
+		assertThat(persons, hasSize(3));
 		assertThat(persons, containsInAnyOrder(
-			new Person("Jonathan", toDate(1988, 11, 8), brazil()),
-			new Person("Steve Jobs", toDate(1955, 2, 24), usa())
+                jonathan(),
+                steveJobs(),
+                domPedro()
 		));
 	}
 	
@@ -207,10 +213,11 @@ public class SelectTest {
 														   .column("p.name", OrderByType.DESC)
 														   .list(new PersonRowMapper());
 
-		assertThat(persons, hasSize(2));
+		assertThat(persons, hasSize(3));
 		assertThat(persons, contains(
-			new Person("Steve Jobs", toDate(1955, 2, 24), null),
-			new Person("Jonathan", toDate(1988, 11, 8), null)
+            steveJobs().setCountry(null),
+            jonathan().setCountry(null),
+            domPedro().setCountry(null)
 		));
 	}
 	
@@ -246,12 +253,58 @@ public class SelectTest {
 														   .column("p.birthday")
 														   .list(new CountRowMapper());
 
-		assertThat(counts, hasSize(2));
+		assertThat(counts, hasSize(3));
 		assertThat(counts, contains(
 			new Integer(1),
-			new Integer(1)
+			new Integer(1),
+            new Integer(1)
+		));
+
+        counts = new QueryBuilderHSQLDB(connection).select()
+														   .count("*")
+														   .from()
+														   .table("PERSON p")
+														   .groupBy("p.birthday")
+														   .list(new CountRowMapper());
+
+		assertThat(counts, hasSize(3));
+		assertThat(counts, contains(
+			new Integer(1),
+			new Integer(1),
+            new Integer(1)
+		));
+
+        counts = new QueryBuilderHSQLDB(connection).select()
+														   .count("c.country_name")
+														   .from()
+														   .tables("PERSON p", "COUNTRY c")
+                                                           .where("p.country_id = c.id")
+														   .groupBy("c.country_name")
+														   .list(new CountRowMapper());
+
+		assertThat(counts, hasSize(2));
+		assertThat(counts, containsInAnyOrder(
+			new Integer(2),
+            new Integer(1)
 		));
 	}
+
+    @Test
+    public void selectCountFromTableGroupByHaving() throws Exception {
+        List<Integer> counts = new QueryBuilderHSQLDB(connection)
+                .select()
+                .count("c.country_name")
+                .from()
+                .tables("COUNTRY c", "PERSON p")
+                .where("c.id = p.country_id")
+                .groupBy("c.country_name")
+                .having("count(c.country_name) > 1")
+                .list(new CountRowMapper())
+                ;
+
+        assertThat(counts, hasSize(1));
+        assertThat(counts, contains(2));
+    }
 
 	@Test
 	public void selectAllFromTableWithPagination_Oracle() throws Exception {
@@ -262,12 +315,13 @@ public class SelectTest {
 														   .table("PERSON p")
 														   .orderBy()
 														   .column("p.name", OrderByType.ASC)
-														   .limit(0, 1)
+														   .limit(0, 2)
 														   .list(new PersonRowMapper());
 
-		assertThat(persons, hasSize(1));
+		assertThat(persons, hasSize(2));
 		assertThat(persons, containsInAnyOrder(
-			new Person("Jonathan", toDate(1988, 11, 8), null)
+            domPedro().setCountry(null),
+			jonathan().setCountry(null)
 		));
 	}
 	
@@ -279,11 +333,12 @@ public class SelectTest {
 														   .table("PERSON p")
 														   .orderBy()
 														   .column("p.name", OrderByType.ASC)
-														   .limit(0, 1)
+														   .limit(0, 2)
 														   .list(new PersonRowMapper());
 
-		assertThat(persons, hasSize(1));
-		assertThat(persons, containsInAnyOrder(
+		assertThat(persons, hasSize(2));
+		assertThat(persons, contains(
+            new Person("Dom Pedro II", toDate(1825, 12, 02), null),
 			new Person("Jonathan", toDate(1988, 11, 8), null)
 		));
 	}
@@ -311,4 +366,16 @@ public class SelectTest {
 	private Object getNullValue() {
 		return null;
 	}
+
+    private Person domPedro(){
+        return new Person("Dom Pedro II", toDate(1825, 12, 02), brazil());
+    }
+
+    private Person steveJobs(){
+        return new Person("Steve Jobs", toDate(1955, 2, 24), usa());
+    }
+
+    private Person jonathan(){
+        return new Person("Jonathan", toDate(1988, 11, 8), brazil());
+    }
 }

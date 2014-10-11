@@ -15,6 +15,14 @@ public class Where extends Condition implements TerminalExpression {
         add(condition);
     }
 
+    public GroupBy groupBy(){
+        return new GroupBy(context);
+    }
+
+    public GroupBy groupBy(String... columns){
+        return new GroupBy(context, columns);
+    }
+
 	public OrderBy orderBy() {
 		return new OrderBy(context);
 	}

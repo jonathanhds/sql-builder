@@ -47,6 +47,11 @@ public class From implements TerminalExpression {
 		return new GroupBy(context);
 	}
 
+    public GroupBy groupBy(String... columns){
+        concatenateTables();
+        return new GroupBy(context, columns);
+    }
+
 	public Join leftOuterJoin(String condition) {
         concatenateTables();
 		return new LeftOuterJoin(context, condition);

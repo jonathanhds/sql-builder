@@ -1,6 +1,7 @@
 package com.github.sqlbuilder.jonathanhds.select;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,18 +11,28 @@ public class Having implements TerminalExpression {
 
 	private final Context context;
 
-	private final List<String> columns;
+	private final List<String> conditions;
 
-	public Having(Context context) {
+	Having(Context context) {
 		this.context = context;
 		this.context.append("HAVING");
-		columns = new LinkedList<>();
+		conditions = new LinkedList<>();
 	}
 
-	public Having column(String column) {
-		columns.add(column);
+    Having(Context context, String... conditions){
+        this(context);
+        this.conditions.addAll(Arrays.asList(conditions));
+    }
+
+	public Having condition(String condition) {
+		conditions.add(condition);
 		return this;
 	}
+
+    public Having conditions(String... conditions){
+        this.conditions.addAll(Arrays.asList(conditions));
+        return this;
+    }
 
 	@Override
 	public <E> List<E> list(RowMapper<E> rowMapper) throws SQLException {
@@ -36,7 +47,7 @@ public class Having implements TerminalExpression {
 	}
 
 	private void end() {
-		context.append(StringUtils.join(columns, ", "));
+		context.append(StringUtils.join(conditions, ", "));
 	}
 
 }
