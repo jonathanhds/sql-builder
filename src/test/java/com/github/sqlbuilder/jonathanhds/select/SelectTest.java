@@ -1,6 +1,10 @@
 package com.github.sqlbuilder.jonathanhds.select;
 
-import static com.github.sqlbuilder.jonathanhds.select.OrderByType.DESC;
+import com.github.sqlbuilder.jonathanhds.dml.QueryBuilderOracle;
+import com.github.sqlbuilder.jonathanhds.dml.QueryBuilderHSQLDB;
+import com.github.sqlbuilder.jonathanhds.dml.OrderByType;
+import com.github.sqlbuilder.jonathanhds.dml.CountRowMapper;
+import static com.github.sqlbuilder.jonathanhds.dml.OrderByType.DESC;
 import static java.util.Calendar.DAY_OF_MONTH;
 import static java.util.Calendar.HOUR_OF_DAY;
 import static java.util.Calendar.MILLISECOND;
@@ -59,9 +63,9 @@ public class SelectTest {
 
 		assertThat(persons, hasSize(3));
 		assertThat(persons, containsInAnyOrder(
-			new Person("Jonathan", toDate(1988, 11, 8), null),
-			new Person("Steve Jobs", toDate(1955, 2, 24), null),
-			new Person("Dom Pedro II", toDate(1825, 12, 02), null)
+                jonathan().setCountry(null),
+                steveJobs().setCountry(null),
+                domPedro().setCountry(null)
 		));
 	}
 
@@ -77,7 +81,7 @@ public class SelectTest {
 
 		assertThat(persons, hasSize(1));
 		assertThat(persons, containsInAnyOrder(
-			new Person("Jonathan", toDate(1988, 11, 8), null)
+                jonathan().setCountry(null)
 		));
 
         persons = new QueryBuilderHSQLDB(connection).select()
@@ -89,7 +93,7 @@ public class SelectTest {
 
 		assertThat(persons, hasSize(1));
 		assertThat(persons, containsInAnyOrder(
-			new Person("Jonathan", toDate(1988, 11, 8), null)
+                jonathan().setCountry(null)
 		));
 	}
 	
@@ -106,7 +110,7 @@ public class SelectTest {
 
 		assertThat(persons, hasSize(1));
 		assertThat(persons, containsInAnyOrder(
-			new Person("Steve Jobs", toDate(1955, 2, 24), null)
+                steveJobs().setCountry(null)
 		));
 	}
 
@@ -123,7 +127,7 @@ public class SelectTest {
 
 		assertThat(persons, hasSize(1));
 		assertThat(persons, containsInAnyOrder(
-			new Person("Jonathan", toDate(1988, 11, 8), brazil())
+                jonathan()
 		));
 	}
 	
@@ -233,7 +237,7 @@ public class SelectTest {
 													.and("p.id = ?", 1)
 													.single(new PersonRowMapper());
 
-		assertThat(person, equalTo(new Person("Jonathan", toDate(1988, 11, 8), null)));
+		assertThat(person, equalTo(jonathan().setCountry(null)));
 	}
 
 	@Test(expected = SQLException.class)
@@ -375,8 +379,8 @@ public class SelectTest {
 
 		assertThat(persons, hasSize(2));
 		assertThat(persons, contains(
-            new Person("Dom Pedro II", toDate(1825, 12, 02), null),
-			new Person("Jonathan", toDate(1988, 11, 8), null)
+                domPedro().setCountry(null),
+                jonathan().setCountry(null)
 		));
 	}
 

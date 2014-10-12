@@ -1,4 +1,4 @@
-package com.github.sqlbuilder.jonathanhds.insert;
+package com.github.sqlbuilder.jonathanhds.dml;
 
 import java.util.Collection;
 import java.util.Collections;

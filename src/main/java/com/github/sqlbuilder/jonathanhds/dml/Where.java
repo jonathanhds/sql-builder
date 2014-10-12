@@ -1,4 +1,4 @@
-package com.github.sqlbuilder.jonathanhds.select;
+package com.github.sqlbuilder.jonathanhds.dml;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -102,5 +102,10 @@ public class Where extends Condition implements TerminalExpression {
     @Override
     protected String getPrefix() {
         return "WHERE";
+    }
+
+    @Override
+    public String toSqlString(){
+        return context.getSql();
     }
 }

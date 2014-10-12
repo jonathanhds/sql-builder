@@ -1,5 +1,6 @@
 package com.github.sqlbuilder.jonathanhds.insert;
 
+import com.github.sqlbuilder.jonathanhds.dml.InsertQuery;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;

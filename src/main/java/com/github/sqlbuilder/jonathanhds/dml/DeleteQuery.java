@@ -1,4 +1,4 @@
-package com.github.sqlbuilder.jonathanhds.delete;
+package com.github.sqlbuilder.jonathanhds.dml;
 
 import java.util.Collection;
 import java.util.LinkedList;

@@ -1,4 +1,4 @@
-package com.github.sqlbuilder.jonathanhds.select;
+package com.github.sqlbuilder.jonathanhds.dml;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -25,6 +25,10 @@ public class Limit implements TerminalExpression {
 		return new LimiterFactory().create(context.getDatabase()).limit(context, start, size);
 	}
 
+    @Override
+    public String toSqlString(){
+        return context.getSql();
+    }
 }
 
 interface Limiter {
@@ -35,9 +39,9 @@ class HSQLDBLimiter implements Limiter {
 
 	@Override
 	public Context limit(Context context, int start, int size) {
-		context.append("LIMIT ?");
+		context.appendLine("LIMIT ?");
 		context.addParameters(size);
-		context.append("OFFSET ?");
+		context.appendLine("OFFSET ?");
 		context.addParameters(start);
 		return context;
 	}
@@ -49,22 +53,22 @@ class OracleLimiter implements Limiter {
 	@Override
 	public Context limit(Context context, int start, int size) {
 		Context c = new Context(context);
-		c.append("SELECT");
-		c.append("data.*");
-		c.append("FROM");
-		c.append("(");
-		c.append("SELECT");
-		c.append("ord_data.*,");
-		c.append("rownum AS rnum");
-		c.append("FROM");
-		c.append("(");
-		c.append(context.toString());
-		c.append(")");
-		c.append("ord_data");
-		c.append(")");
-		c.append("data");
-		c.append("WHERE");
-		c.append("rnum BETWEEN ? AND ?");
+		c.appendLine("SELECT");
+		c.appendLine("data.*");
+		c.appendLine("FROM");
+		c.appendLine("(");
+		c.appendLine("SELECT");
+		c.appendLine("ord_data.*,");
+		c.appendLine("rownum AS rnum");
+		c.appendLine("FROM");
+		c.appendLine("(");
+		c.appendLine(context.toString());
+		c.appendLine(")");
+		c.appendLine("ord_data");
+		c.appendLine(")");
+		c.appendLine("data");
+		c.appendLine("WHERE");
+		c.appendLine("rnum BETWEEN ? AND ?");
 		c.addParameters(start);
 		c.addParameters(start + size);
 		return c;

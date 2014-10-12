@@ -1,5 +1,6 @@
 package com.github.sqlbuilder.jonathanhds.delete;
 
+import com.github.sqlbuilder.jonathanhds.dml.DeleteQuery;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;

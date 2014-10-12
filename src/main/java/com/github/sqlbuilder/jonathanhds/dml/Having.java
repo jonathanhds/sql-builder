@@ -1,4 +1,4 @@
-package com.github.sqlbuilder.jonathanhds.select;
+package com.github.sqlbuilder.jonathanhds.dml;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -7,46 +7,33 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-public class GroupBy implements TerminalExpression {
+public class Having implements TerminalExpression {
 
 	private final Context context;
 
-	private final List<String> columns;
+    private boolean terminated = false;
 
-	public GroupBy(Context context) {
+	private final List<String> conditions;
+
+	Having(Context context) {
 		this.context = context;
-		context.append("GROUP BY");
-		columns = new LinkedList<>();
+		this.context.appendLine("HAVING");
+		conditions = new LinkedList<>();
 	}
 
-    GroupBy(Context context, String... columns){
+    Having(Context context, String... conditions){
         this(context);
-        this.columns.addAll(Arrays.asList(columns));
+        this.conditions.addAll(Arrays.asList(conditions));
     }
 
-	public GroupBy column(String column) {
-		columns.add(column);
+	public Having condition(String condition) {
+		conditions.add(condition);
 		return this;
 	}
 
-    public GroupBy columns(String... columns){
-        this.columns.addAll(Arrays.asList(columns));
+    public Having conditions(String... conditions){
+        this.conditions.addAll(Arrays.asList(conditions));
         return this;
-    }
-
-	public Having having() {
-		terminate();
-		return new Having(context);
-	}
-
-    public Having having(String condition){
-        terminate();
-        return new Having(context, condition);
-    }
-
-    public OrderBy orderBy(){
-        terminate();
-        return new OrderBy(context);
     }
 
     public OrderBy orderBy(String... columns){
@@ -76,8 +63,16 @@ public class GroupBy implements TerminalExpression {
 		return context.single(rowMapper);
 	}
 
+    public String toSqlString(){
+        terminate();
+        return context.getSql();
+    }
+
 	private void terminate() {
-		context.append(StringUtils.join(columns, ", "));
+        if(!terminated){
+		    context.appendLine(StringUtils.join(conditions, ", "));
+            terminated = true;
+        }
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.github.sqlbuilder.jonathanhds.select;
+package com.github.sqlbuilder.jonathanhds.dml;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,11 +10,13 @@ public class From implements TerminalExpression {
 
 	private Context context;
 
+    private boolean terminated = false;
+
     private final List<String> tables = new ArrayList<>();
 
 	From(Context context) {
 		this.context = context;
-		this.context.append("FROM");
+		this.context.appendLine("FROM");
 	}
 
 	public From table(String table) {
@@ -33,63 +35,72 @@ public class From implements TerminalExpression {
     }
 
 	public Where where() {
-        concatenateTables();
+        terminate();
 		return new Where(context);
 	}
 
     public Where where(String condition) {
-        concatenateTables();
+        terminate();
         return new Where(context, condition);
     }
 	
 	public GroupBy groupBy() {
-        concatenateTables();
+        terminate();
 		return new GroupBy(context);
 	}
 
     public GroupBy groupBy(String... columns){
-        concatenateTables();
+        terminate();
         return new GroupBy(context, columns);
     }
 
 	public Join leftOuterJoin(String condition) {
-        concatenateTables();
+        terminate();
 		return new LeftOuterJoin(context, condition);
 	}
 	
 	public Join rightOuterJoin(String condition) {
-        concatenateTables();
+        terminate();
 		return new RightOuterJoin(context, condition);
 	}
 	
 	public Join innerJoin(String condition) {
-        concatenateTables();
+        terminate();
 		return new InnerJoin(context, condition);
 	}
 	
 	public OrderBy orderBy() {
-        concatenateTables();
+        terminate();
 		return new OrderBy(context);
 	}
 	
 	public Limit limit(int start, int size) {
-        concatenateTables();
+        terminate();
 		return new Limit(context, start, size);
 	}
 
 	public <E> List<E> list(RowMapper<E> rowMapper) throws SQLException {
-        concatenateTables();
+        terminate();
 		return context.list(rowMapper);
 	}
 
 	public <E> E single(RowMapper<E> rowMapper) throws SQLException {
-        concatenateTables();
+        terminate();
 		return context.single(rowMapper);
 	}
 
-    private void concatenateTables(){
-        final String newLine = System.getProperty("line.separator");
-        this.context.append(StringUtils.join(tables, "," + newLine));
-        this.context.append(newLine);
+    @Override
+    public String toSqlString(){
+        terminate();
+        return context.getSql();
+    }
+
+    private void terminate(){
+        if(!terminated){
+            final String newLine = System.getProperty("line.separator");
+            this.context.appendLine(StringUtils.join(tables, "," + newLine));
+            this.context.appendLine(newLine);
+            terminated = true;
+        }
     }
 }

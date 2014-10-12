@@ -1,4 +1,4 @@
-package com.github.sqlbuilder.jonathanhds.select;
+package com.github.sqlbuilder.jonathanhds.dml;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,12 +12,14 @@ public class OrderBy implements TerminalExpression {
 
     private OrderByType order;
 
+    private boolean terminated = false;
+
     private final List<String> columns = new ArrayList<>();
 
 	OrderBy(Context context) {
 		this.context = context;
         this.order = OrderByType.ASC;
-		context.append("ORDER BY");
+		context.appendLine("ORDER BY");
 	}
 
     OrderBy(Context context, String... columns){
@@ -73,9 +75,17 @@ public class OrderBy implements TerminalExpression {
 		return context.single(rowMapper);
 	}
 
+    @Override
+    public String toSqlString(){
+        terminate();
+        return context.getSql();
+    }
+
     private void terminate(){
-        context.append(" ");
-        context.append(StringUtils.join(columns, ", "));
-        context.append(" " + order.name());
+        if(!terminated){
+            context.appendLine(" ");
+            context.appendLine(StringUtils.join(columns, ", "));
+            context.appendLine(" " + order.name());
+        }
     }
 }

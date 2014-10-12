@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-import com.github.sqlbuilder.jonathanhds.select.RowMapper;
+import com.github.sqlbuilder.jonathanhds.dml.RowMapper;
 
 public class PersonRowMapper extends RowMapper<Person> {
 
