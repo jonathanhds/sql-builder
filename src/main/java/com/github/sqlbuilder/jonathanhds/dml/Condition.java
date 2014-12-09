@@ -1,4 +1,4 @@
-package com.github.sqlbuilder.jonathanhds.select;
+package com.github.sqlbuilder.jonathanhds.dml;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -12,7 +12,7 @@ abstract class Condition {
 	}
 
 	void add(Object condition) {
-		context.append(getPrefix() + " " + condition);
+		context.appendLine(getPrefix() + " " + condition);
 	}
 
 	void add(Object condition, Object parameter) {

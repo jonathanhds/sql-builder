@@ -1,4 +1,4 @@
-package com.github.sqlbuilder.jonathanhds.select;
+package com.github.sqlbuilder.jonathanhds.dml;
 
 class RightOuterJoin extends Join {
 

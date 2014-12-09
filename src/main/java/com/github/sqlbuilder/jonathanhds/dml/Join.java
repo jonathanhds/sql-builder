@@ -1,4 +1,4 @@
-package com.github.sqlbuilder.jonathanhds.select;
+package com.github.sqlbuilder.jonathanhds.dml;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -9,12 +9,12 @@ public abstract class Join implements TerminalExpression {
 
 	Join(Context context) {
 		this.context = context;
-		context.append(expression());
+		context.appendLine(expression());
 	}
 
 	Join(Context context, String condition) {
 		this(context);
-		context.append(condition);
+		context.appendLine(condition);
 	}
 	
 	public OrderBy orderBy() {
@@ -45,4 +45,8 @@ public abstract class Join implements TerminalExpression {
 
 	protected abstract String expression();
 
+    @Override
+    public String toSqlString(){
+        return context.getSql();
+    }
 }

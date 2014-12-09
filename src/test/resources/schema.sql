@@ -10,5 +10,5 @@ CREATE TABLE person (
 	birthday DATE,
 	country_id INT,
 	CONSTRAINT pk_person PRIMARY KEY (id),
-	CONSTRAINT fk_person_country FOREIGN KEY (id) REFERENCES country(id)
+	CONSTRAINT fk_person_country FOREIGN KEY (country_id) REFERENCES country(id)
 );

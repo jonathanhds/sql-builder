@@ -1,4 +1,4 @@
-package com.github.sqlbuilder.jonathanhds.select;
+package com.github.sqlbuilder.jonathanhds.dml;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 class Context {
+
+    private static final String NEW_LINE = System.getProperty("line.separator");
 
 	private final Connection connection;
 
@@ -74,10 +76,21 @@ class Context {
 		return result;
 	}
 
-	void append(String expression) {
+    Context append(String expression){
+        sql.append(expression);
+        return this;
+    }
+
+	Context appendLine(String expression) {
 		sql.append(expression);
-		sql.append("\n");
+		sql.append(NEW_LINE);
+        return this;
 	}
+
+    Context newLine(){
+        sql.append(NEW_LINE);
+        return this;
+    }
 
 	void addParameters(Object... parameters) {
 		for (Object parameter : parameters) {
@@ -96,7 +109,7 @@ class Context {
 		}
 	}
 
-	private String getSql() {
+	String getSql() {
 		return sql.toString();
 	}
 

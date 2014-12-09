@@ -1,4 +1,4 @@
-package com.github.sqlbuilder.jonathanhds.select;
+package com.github.sqlbuilder.jonathanhds.dml;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

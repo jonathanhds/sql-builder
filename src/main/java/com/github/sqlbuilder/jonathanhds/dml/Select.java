@@ -1,11 +1,11 @@
-package com.github.sqlbuilder.jonathanhds.select;
+package com.github.sqlbuilder.jonathanhds.dml;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-public class Select {
+public class Select implements Query {
 
 	private Context context;
 
@@ -13,12 +13,12 @@ public class Select {
 
 	public Select(Context context) {
 		this.context = context;
-		this.context.append("SELECT");
+		this.context.appendLine("SELECT");
 		columns = new LinkedList<>();
 	}
 
 	public From from() {
-		this.context.append(StringUtils.join(columns, ",\n"));
+		this.context.appendLine(StringUtils.join(columns, ",\n"));
 		return new From(context);
 	}
 
@@ -49,4 +49,8 @@ public class Select {
 		columns.add(expression);
 	}
 
+    @Override
+    public String toSqlString(){
+        return context.getSql();
+    }
 }

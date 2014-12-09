@@ -3,7 +3,7 @@ package com.github.sqlbuilder.jonathanhds.support;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.github.sqlbuilder.jonathanhds.select.RowMapper;
+import com.github.sqlbuilder.jonathanhds.dml.RowMapper;
 
 public class CountryRowMapper extends RowMapper<Country> {
 

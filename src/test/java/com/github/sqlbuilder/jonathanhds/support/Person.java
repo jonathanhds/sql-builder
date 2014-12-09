@@ -64,24 +64,27 @@ public class Person {
 		return name;
 	}
 
-	public void setName(String name) {
+	public Person setName(String name) {
 		this.name = name;
+        return this;
 	}
 
 	public Date getBirthDay() {
 		return birthDay;
 	}
 
-	public void setBirthDay(Date birthDay) {
+	public Person setBirthDay(Date birthDay) {
 		this.birthDay = birthDay;
+        return this;
 	}
 
 	public Country getCountry() {
 		return country;
 	}
 
-	public void setCountry(Country country) {
+	public Person setCountry(Country country) {
 		this.country = country;
+        return this;
 	}
 
 }
