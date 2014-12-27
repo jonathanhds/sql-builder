@@ -3,7 +3,7 @@
 	<groupId>com.github.jonathanhds</groupId>
 	<artifactId>sql-builder</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2-SNAPSHOT</version>
+	<version>1.2</version>
 	<name>sql-builder</name>
 	<url>https://github.com/jonathanhds/sql-builder</url>
 	<description>A dynamic SQL builder for Java language.</description>
@@ -23,7 +23,8 @@
 		<connection>scm:git:https://github.com/jonathanhds/sql-builder.git</connection>
 		<developerConnection>scm:git:https://github.com/jonathanhds/sql-builder.git</developerConnection>
 		<url>https://github.com/jonathanhds/sql-builder</url>
-    </scm>
+      <tag>1.2</tag>
+  </scm>
 
 	<ciManagement>
 		<system>Travis</system>
