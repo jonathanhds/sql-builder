@@ -5,6 +5,9 @@
 	<packaging>jar</packaging>
 	<version>1.2-SNAPSHOT</version>
 	<name>sql-builder</name>
+	<url>https://github.com/jonathanhds/sql-builder</url>
+	<description>A dynamic SQL builder for Java language.</description>
+	<inceptionYear>2013</inceptionYear>
 
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -21,6 +24,11 @@
         <connection>scm:git:ssh://git@github.com/jonathanhds/sql-builder.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/jonathanhds/sql-builder.git</developerConnection>
     </scm>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/jonathanhds/sql-builder/issues</url>
+	</issueManagement>
 
     <licenses>
         <license>
@@ -42,7 +50,7 @@
         <developer>
             <id>jonathanhds</id>
             <name>Jonathan Henrique de Souza</name>
-            <email>jonathanhds@gmail.com</email>
+            <email>jonathan.henrique@icloud.com</email>
         </developer>
     </developers>
 
@@ -100,7 +108,6 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
-
 		</plugins>
 	</build>
 
