@@ -18,13 +18,13 @@ abstract class Condition {
 
 	void add(Object condition, Object parameter) {
 		if (parameter != null) {
-			add(condition, new Object[] { parameter });
+			add(condition, new Object[]{parameter});
 		}
 	}
 
 	void add(String condition, String parameter) {
 		if (StringUtils.isNotBlank(parameter)) {
-			add(condition, new Object[] { parameter });
+			add(condition, new Object[]{parameter});
 		}
 	}
 

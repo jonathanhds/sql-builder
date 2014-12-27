@@ -4,11 +4,11 @@ import com.github.jonathanhds.sqlbuilder.Context;
 
 class InnerJoin extends Join {
 
-	public InnerJoin(Context context, String condition) {
+	InnerJoin(Context context, String condition) {
 		super(context, condition);
 	}
 
-	public InnerJoin(Context context) {
+	InnerJoin(Context context) {
 		super(context);
 	}
 

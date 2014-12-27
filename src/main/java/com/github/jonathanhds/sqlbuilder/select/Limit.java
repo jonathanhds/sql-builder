@@ -29,10 +29,10 @@ public class Limit implements TerminalExpression {
 		return new LimiterFactory().create(context.getDatabase()).limit(context, start, size);
 	}
 
-    @Override
-    public String toSqlString(){
-        return context.getSql();
-    }
+	@Override
+	public String toString() {
+		return context.toString();
+	}
 }
 
 interface Limiter {
@@ -77,7 +77,7 @@ class OracleLimiter implements Limiter {
 		c.addParameters(start + size);
 		return c;
 	}
-	
+
 }
 
 class DefaultLimiter implements Limiter {
@@ -90,12 +90,12 @@ class DefaultLimiter implements Limiter {
 class LimiterFactory {
 	Limiter create(Database database) {
 		switch (database) {
-		case HSQLDB:
-			return new HSQLDBLimiter();
-		case ORACLE:
-			return new OracleLimiter();
-		default:
-			return new DefaultLimiter();
+			case HSQLDB:
+				return new HSQLDBLimiter();
+			case ORACLE:
+				return new OracleLimiter();
+			default:
+				return new DefaultLimiter();
 		}
 	}
 }

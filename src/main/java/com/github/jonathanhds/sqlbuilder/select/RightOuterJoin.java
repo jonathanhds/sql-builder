@@ -4,11 +4,11 @@ import com.github.jonathanhds.sqlbuilder.Context;
 
 class RightOuterJoin extends Join {
 
-	public RightOuterJoin(Context context, String condition) {
+	RightOuterJoin(Context context, String condition) {
 		super(context, condition);
 	}
 
-	public RightOuterJoin(Context context) {
+	RightOuterJoin(Context context) {
 		super(context);
 	}
 

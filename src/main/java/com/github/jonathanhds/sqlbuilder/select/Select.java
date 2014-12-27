@@ -1,13 +1,12 @@
 package com.github.jonathanhds.sqlbuilder.select;
 
 import com.github.jonathanhds.sqlbuilder.Context;
-import com.github.jonathanhds.sqlbuilder.Query;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class Select implements Query {
+public class Select {
 
 	private Context context;
 
@@ -34,13 +33,13 @@ public class Select implements Query {
 		return this;
 	}
 
-    public Select columns(String... columns) {
-        for(String column : columns){
-            append(column);
-        }
+	public Select columns(String... columns) {
+		for (String column : columns) {
+			append(column);
+		}
 
-        return this;
-    }
+		return this;
+	}
 
 	public Select count(String column) {
 		append("COUNT(" + column + ")");
@@ -51,8 +50,8 @@ public class Select implements Query {
 		columns.add(expression);
 	}
 
-    @Override
-    public String toSqlString(){
-        return context.getSql();
-    }
+	@Override
+	public String toString() {
+		return context.toString();
+	}
 }

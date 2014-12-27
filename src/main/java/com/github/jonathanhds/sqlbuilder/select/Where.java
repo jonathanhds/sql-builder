@@ -9,34 +9,34 @@ import java.util.List;
 public class Where extends Condition implements TerminalExpression {
 
 	Where(Context context) {
-        super(context);
-        add("1 = 1");
+		super(context);
+		add("1 = 1");
 	}
 
-    Where(Context context, String condition) {
-        super(context);
-        add(condition);
-    }
+	Where(Context context, String condition) {
+		super(context);
+		add(condition);
+	}
 
-    public GroupBy groupBy(){
-        return new GroupBy(context);
-    }
+	public GroupBy groupBy() {
+		return new GroupBy(context);
+	}
 
-    public GroupBy groupBy(String... columns){
-        return new GroupBy(context, columns);
-    }
+	public GroupBy groupBy(String... columns) {
+		return new GroupBy(context, columns);
+	}
 
 	public OrderBy orderBy() {
 		return new OrderBy(context);
 	}
 
-    public OrderBy orderBy(String... columns){
-        return new OrderBy(context, columns);
-    }
+	public OrderBy orderBy(String... columns) {
+		return new OrderBy(context, columns);
+	}
 
-    public OrderBy orderBy(OrderByType order, String... columns){
-        return new OrderBy(context, order, columns);
-    }
+	public OrderBy orderBy(OrderByType order, String... columns) {
+		return new OrderBy(context, order, columns);
+	}
 
 	public Where and(Object condition) {
 		new AndCondition(context).add(condition);
@@ -102,13 +102,13 @@ public class Where extends Condition implements TerminalExpression {
 		return context.single(rowMapper);
 	}
 
-    @Override
-    protected String getPrefix() {
-        return "WHERE";
-    }
+	@Override
+	protected String getPrefix() {
+		return "WHERE";
+	}
 
-    @Override
-    public String toSqlString(){
-        return context.getSql();
-    }
+	@Override
+	public String toString() {
+		return context.toString();
+	}
 }

@@ -19,7 +19,7 @@ public abstract class Join implements TerminalExpression {
 		this(context);
 		context.appendLine(condition);
 	}
-	
+
 	public OrderBy orderBy() {
 		return new OrderBy(context);
 	}
@@ -28,10 +28,10 @@ public abstract class Join implements TerminalExpression {
 		return new Where(context);
 	}
 
-    public Where where(String condition) {
-        return new Where(context, condition);
-    }
-	
+	public Where where(String condition) {
+		return new Where(context, condition);
+	}
+
 	public Limit limit(int start, int size) {
 		return new Limit(context, start, size);
 	}
@@ -48,8 +48,8 @@ public abstract class Join implements TerminalExpression {
 
 	protected abstract String expression();
 
-    @Override
-    public String toSqlString(){
-        return context.getSql();
-    }
+	@Override
+	public String toString() {
+		return context.toString();
+	}
 }

@@ -2,16 +2,15 @@ package com.github.jonathanhds.sqlbuilder.update;
 
 import com.github.jonathanhds.sqlbuilder.Context;
 import com.github.jonathanhds.sqlbuilder.IllegalQueryException;
-import com.github.jonathanhds.sqlbuilder.Query;
 
 import java.util.*;
 import java.util.Map.Entry;
 
-public class Update implements Query {
+public class Update {
 
-    private Context context;
+	private Context context;
 
-    private boolean terminated = false;
+	private boolean terminated = false;
 
 	private String table;
 
@@ -19,22 +18,22 @@ public class Update implements Query {
 
 	private Collection<String> conditions;
 
-    public Update(Context context){
-        this.context = context;
-        this.context.append("UPDATE ");
-        this.assignments = new LinkedHashMap<>();
-        this.conditions = new LinkedList<>();
-    }
+	public Update(Context context) {
+		this.context = context;
+		this.context.append("UPDATE ");
+		this.assignments = new LinkedHashMap<>();
+		this.conditions = new LinkedList<>();
+	}
 
 	public Update(Context context, String table) {
-        this(context);
+		this(context);
 		this.table = table;
 	}
 
-    public Update table(String table){
-        this.table = table;
-        return this;
-    }
+	public Update table(String table) {
+		this.table = table;
+		return this;
+	}
 
 	public Update set(String column, String value) {
 		assignments.put(column, value);
@@ -46,54 +45,54 @@ public class Update implements Query {
 		return this;
 	}
 
-    public Update and(String condition){
-        conditions.add(condition);
-        return this;
-    }
+	public Update and(String condition) {
+		conditions.add(condition);
+		return this;
+	}
 
-    private void terminate(){
+	private void terminate() {
 		if (assignments.isEmpty()) throw new IllegalQueryException("Not contains SET statements!");
-        
-        if(!terminated){
-            context.append(table).appendLine(" SET");
 
-            Iterator<Entry<String, String>> iter = assignments.entrySet().iterator();
+		if (!terminated) {
+			context.append(table).appendLine(" SET");
 
-            while(iter.hasNext()){
-                Entry<String, String> assignment = iter.next();
-                context.append(assignment.getKey())
-                        .append(" = ")
-                        .append("'")
-                        .append(assignment.getValue())
-                        .append("'");
+			Iterator<Entry<String, String>> iter = assignments.entrySet().iterator();
 
-                if(iter.hasNext()){
-                    context.append(",").newLine();
-                }
-            }
+			while (iter.hasNext()) {
+				Entry<String, String> assignment = iter.next();
+				context.append(assignment.getKey())
+						.append(" = ")
+						.append("'")
+						.append(assignment.getValue())
+						.append("'");
 
-            if(!conditions.isEmpty()){
-                context.newLine().append("WHERE ");
+				if (iter.hasNext()) {
+					context.append(",").newLine();
+				}
+			}
 
-                Iterator<String> conditionIter = conditions.iterator();
+			if (!conditions.isEmpty()) {
+				context.newLine().append("WHERE ");
 
-                while(conditionIter.hasNext()){
-                    String condition = conditionIter.next();
-                    context.append(condition);
+				Iterator<String> conditionIter = conditions.iterator();
 
-                    if(conditionIter.hasNext()){
-                        context.newLine().append("AND ");
-                    }
-                }
-            }
+				while (conditionIter.hasNext()) {
+					String condition = conditionIter.next();
+					context.append(condition);
 
-            terminated = true;
-        }
-    }
+					if (conditionIter.hasNext()) {
+						context.newLine().append("AND ");
+					}
+				}
+			}
+
+			terminated = true;
+		}
+	}
 
 	@Override
-	public String toSqlString() {
-        terminate();
+	public String toString() {
+		terminate();
 		return context.toString();
 	}
 

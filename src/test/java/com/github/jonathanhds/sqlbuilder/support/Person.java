@@ -21,7 +21,7 @@ public class Person {
 		this.birthDay = birthDay;
 		this.country = country;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
@@ -39,25 +39,25 @@ public class Person {
 		Person other = (Person) obj;
 
 		return new EqualsBuilder().append(this.name, other.name)
-								  .append(this.birthDay, other.birthDay)
-								  .append(this.country, other.country)
-								  .isEquals();
+				.append(this.birthDay, other.birthDay)
+				.append(this.country, other.country)
+				.isEquals();
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder().append(this.name)
-									.append(this.birthDay)
-									.append(this.country)
-									.toHashCode();
+				.append(this.birthDay)
+				.append(this.country)
+				.toHashCode();
 	}
-	
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("name", name)
-																		  .append("birthDay", birthDay)
-																		  .append("country", country)
-																		  .toString();
+				.append("birthDay", birthDay)
+				.append("country", country)
+				.toString();
 	}
 
 	public String getName() {
@@ -66,7 +66,7 @@ public class Person {
 
 	public Person setName(String name) {
 		this.name = name;
-        return this;
+		return this;
 	}
 
 	public Date getBirthDay() {
@@ -75,7 +75,7 @@ public class Person {
 
 	public Person setBirthDay(Date birthDay) {
 		this.birthDay = birthDay;
-        return this;
+		return this;
 	}
 
 	public Country getCountry() {
@@ -84,7 +84,7 @@ public class Person {
 
 	public Person setCountry(Country country) {
 		this.country = country;
-        return this;
+		return this;
 	}
 
 }

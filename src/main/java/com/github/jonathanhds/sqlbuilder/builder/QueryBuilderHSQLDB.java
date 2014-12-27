@@ -1,4 +1,6 @@
-package com.github.jonathanhds.sqlbuilder;
+package com.github.jonathanhds.sqlbuilder.builder;
+
+import com.github.jonathanhds.sqlbuilder.Database;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MemoryDatabase {
-	
+
 	static {
 		try {
 			Class.forName("org.hsqldb.jdbcDriver");

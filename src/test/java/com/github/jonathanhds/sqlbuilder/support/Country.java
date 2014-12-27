@@ -12,7 +12,7 @@ public class Country {
 	public Country(String countryName) {
 		this.countrycountryName = countryName;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
@@ -30,19 +30,19 @@ public class Country {
 		Country other = (Country) obj;
 
 		return new EqualsBuilder().append(this.countrycountryName, other.countrycountryName)
-								  .isEquals();
+				.isEquals();
 	}
 
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder().append(this.countrycountryName)
-									.toHashCode();
+				.toHashCode();
 	}
-	
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("countryName", countrycountryName)
-																		  .toString();
+				.toString();
 	}
 
 	public String getCountryName() {

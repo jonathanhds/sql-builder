@@ -4,11 +4,11 @@ import com.github.jonathanhds.sqlbuilder.Context;
 
 class LeftOuterJoin extends Join {
 
-	public LeftOuterJoin(Context context) {
+	LeftOuterJoin(Context context) {
 		super(context);
 	}
 
-	public LeftOuterJoin(Context context, String condition) {
+	LeftOuterJoin(Context context, String condition) {
 		super(context, condition);
 	}
 

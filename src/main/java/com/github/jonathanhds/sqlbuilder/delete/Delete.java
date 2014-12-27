@@ -2,28 +2,28 @@ package com.github.jonathanhds.sqlbuilder.delete;
 
 import com.github.jonathanhds.sqlbuilder.Context;
 import com.github.jonathanhds.sqlbuilder.IllegalQueryException;
-import com.github.jonathanhds.sqlbuilder.Query;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 
-public class Delete implements Query {
+public class Delete {
 
 	private String table;
-    private final Context context;
+	private final Context context;
 	private final Collection<String> conditions;
-    private boolean terminated = false;
+	private boolean terminated = false;
 
-    public Delete(Context context){
-        this.context = context;
-        this.context.append("DELETE FROM ");
-        conditions = new LinkedList<>();
-    }
+	public Delete(Context context) {
+		this.context = context;
+		this.context.append("DELETE FROM ");
+		conditions = new LinkedList<>();
+	}
 
 	public Delete(Context context, String table) {
-        this(context);
+		this(context);
 		this.table = table;
 	}
 
@@ -32,39 +32,39 @@ public class Delete implements Query {
 		return this;
 	}
 
-    public Delete and(String condition){
-        conditions.add(condition);
-        return this;
-    }
+	public Delete and(String condition) {
+		conditions.add(condition);
+		return this;
+	}
 
-    private void terminate(){
-		if (table == null || "".equals(table)) throw new IllegalQueryException("No table specified!");
-        
-        if(!terminated){
-            context.append(table);
+	private void terminate() {
+		if (StringUtils.isBlank(table)) throw new IllegalQueryException("No table specified!");
 
-            if(!conditions.isEmpty()){
-                context.newLine().append("WHERE ");
+		if (!terminated) {
+			context.append(table);
 
-                Iterator<String> conditionIter = conditions.iterator();
+			if (!conditions.isEmpty()) {
+				context.newLine().append("WHERE ");
 
-                while(conditionIter.hasNext()){
-                    String condition = conditionIter.next();
-                    context.append(condition);
+				Iterator<String> conditionIter = conditions.iterator();
 
-                    if(conditionIter.hasNext()){
-                        context.newLine().append("AND ");
-                    }
-                }
-            }
+				while (conditionIter.hasNext()) {
+					String condition = conditionIter.next();
+					context.append(condition);
 
-            terminated = true;
-        }
-    }
+					if (conditionIter.hasNext()) {
+						context.newLine().append("AND ");
+					}
+				}
+			}
+
+			terminated = true;
+		}
+	}
 
 	@Override
-	public String toSqlString() {
-        terminate();
-        return context.getSql();
+	public String toString() {
+		terminate();
+		return context.toString();
 	}
 }
