@@ -9,22 +9,22 @@
 	<description>A dynamic SQL builder for Java language.</description>
 	<inceptionYear>2013</inceptionYear>
 
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-    </parent>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-    <scm>
+	<scm>
 		<connection>scm:git:https://github.com/jonathanhds/sql-builder.git</connection>
 		<developerConnection>scm:git:https://github.com/jonathanhds/sql-builder.git</developerConnection>
 		<url>https://github.com/jonathanhds/sql-builder</url>
-      <tag>1.2</tag>
-  </scm>
+		<tag>1.2</tag>
+	</scm>
 
 	<ciManagement>
 		<system>Travis</system>
@@ -36,13 +36,13 @@
 		<url>https://github.com/jonathanhds/sql-builder/issues</url>
 	</issueManagement>
 
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<distributionManagement>
 		<snapshotRepository>
@@ -55,13 +55,13 @@
 		</repository>
 	</distributionManagement>
 
-    <developers>
-        <developer>
-            <id>jonathanhds</id>
-            <name>Jonathan Henrique de Souza</name>
-            <email>jonathan.henrique@icloud.com</email>
-        </developer>
-    </developers>
+	<developers>
+		<developer>
+			<id>jonathanhds</id>
+			<name>Jonathan Henrique de Souza</name>
+			<email>jonathan.henrique@icloud.com</email>
+		</developer>
+	</developers>
 
 	<dependencies>
 		<dependency>
