@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -95,9 +96,7 @@ public class Context {
 	}
 
 	public void addParameters(Object... parameters) {
-		for (Object parameter : parameters) {
-			this.parameters.add(parameter);
-		}
+		this.parameters.addAll(Arrays.asList(parameters));
 	}
 
 	public Database getDatabase() {

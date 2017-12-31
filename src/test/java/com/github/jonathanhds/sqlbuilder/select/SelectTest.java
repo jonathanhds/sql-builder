@@ -245,9 +245,9 @@ public class SelectTest {
 
 		assertThat(counts, hasSize(3));
 		assertThat(counts, contains(
-				new Integer(1),
-				new Integer(1),
-				new Integer(1)
+				1,
+				1,
+				1
 		));
 
 		counts = new QueryBuilderHSQLDB(connection).select()
@@ -259,9 +259,9 @@ public class SelectTest {
 
 		assertThat(counts, hasSize(3));
 		assertThat(counts, contains(
-				new Integer(1),
-				new Integer(1),
-				new Integer(1)
+				1,
+				1,
+				1
 		));
 
 		counts = new QueryBuilderHSQLDB(connection).select()
@@ -274,8 +274,8 @@ public class SelectTest {
 
 		assertThat(counts, hasSize(2));
 		assertThat(counts, containsInAnyOrder(
-				new Integer(2),
-				new Integer(1)
+				2,
+				1
 		));
 	}
 

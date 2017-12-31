@@ -37,9 +37,7 @@ abstract class Condition {
 
 	void between(String columnName, Object start, Object end) {
 		if (start == null) {
-			if (end == null) {
-				return;
-			} else {
+			if (end != null) {
 				add(columnName + " <= ?", end);
 			}
 		} else {

@@ -17,7 +17,7 @@ public class MemoryDatabase {
 		}
 	}
 
-	public Connection getConnection() throws SQLException, FileNotFoundException, IOException {
+	public Connection getConnection() throws SQLException, IOException {
 		Connection connection = DriverManager.getConnection("jdbc:hsqldb:mem:querybuilder;sql.syntax_ora=true", "SA", "");
 
 		ScriptRunner runner = new ScriptRunner(connection, true, true);
