@@ -23,6 +23,10 @@ public class QueryBuilder {
 		this.context = new Context(database, connection);
 	}
 
+	public QueryBuilder() {
+		this.context = new Context(Database.NONE);
+	}
+
 	public Select select() {
 		return new Select(context);
 	}
