@@ -11,3 +11,4 @@
 *.iml
 pom.xml.releaseBackup
 release.properties
+.vscode
