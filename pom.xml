@@ -3,7 +3,7 @@
 	<groupId>com.github.jonathanhds</groupId>
 	<artifactId>sql-builder</artifactId>
 	<packaging>jar</packaging>
-	<version>1.3-SNAPSHOT</version>
+	<version>1.4-SNAPSHOT</version>
 	<name>sql-builder</name>
 	<url>https://github.com/jonathanhds/sql-builder</url>
 	<description>A dynamic SQL builder for Java language.</description>
@@ -97,12 +97,12 @@
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
-			<version>1.8.3</version>
+			<version>1.9.2</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
-			<version>3.2.1</version>
+			<version>3.2.2</version>
 		</dependency>
 	</dependencies>
 
