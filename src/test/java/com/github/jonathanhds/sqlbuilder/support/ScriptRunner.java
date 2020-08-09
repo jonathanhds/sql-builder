@@ -7,7 +7,6 @@ import java.io.Reader;
 import java.sql.*;
 
 public class ScriptRunner {
-
 	private static final String DEFAULT_DELIMITER = ";";
 
 	private Connection connection;
@@ -24,7 +23,11 @@ public class ScriptRunner {
 	/**
 	 * Default constructor
 	 */
-	public ScriptRunner(Connection connection, boolean autoCommit, boolean stopOnError) {
+	public ScriptRunner(
+		Connection connection,
+		boolean autoCommit,
+		boolean stopOnError
+	) {
 		this.connection = connection;
 		this.autoCommit = autoCommit;
 		this.stopOnError = stopOnError;
@@ -87,7 +90,8 @@ public class ScriptRunner {
 	 * @throws SQLException if any SQL errors occur
 	 * @throws IOException  if there is an error reading from the Reader
 	 */
-	private void runScript(Connection conn, Reader reader) throws IOException, SQLException {
+	private void runScript(Connection conn, Reader reader)
+		throws IOException, SQLException {
 		StringBuffer command = null;
 		try {
 			LineNumberReader lineReader = new LineNumberReader(reader);
@@ -103,7 +107,12 @@ public class ScriptRunner {
 					// Do nothing
 				} else if (trimmedLine.length() < 1 || trimmedLine.startsWith("--")) {
 					// Do nothing
-				} else if (!fullLineDelimiter && trimmedLine.endsWith(getDelimiter()) || fullLineDelimiter && trimmedLine.equals(getDelimiter())) {
+				} else if (
+					!fullLineDelimiter &&
+					trimmedLine.endsWith(getDelimiter()) ||
+					fullLineDelimiter &&
+					trimmedLine.equals(getDelimiter())
+				) {
 					command.append(line.substring(0, line.lastIndexOf(getDelimiter())));
 					command.append(" ");
 					Statement statement = conn.createStatement();

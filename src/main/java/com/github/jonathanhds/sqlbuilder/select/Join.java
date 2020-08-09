@@ -2,12 +2,10 @@ package com.github.jonathanhds.sqlbuilder.select;
 
 import com.github.jonathanhds.sqlbuilder.Context;
 import com.github.jonathanhds.sqlbuilder.TerminalExpression;
-
 import java.sql.SQLException;
 import java.util.List;
 
 public abstract class Join implements TerminalExpression {
-
 	private Context context;
 
 	Join(Context context) {

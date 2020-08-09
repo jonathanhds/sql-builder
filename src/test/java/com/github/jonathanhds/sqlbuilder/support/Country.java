@@ -6,7 +6,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 public class Country {
-
 	private String countryName;
 
 	public Country(String countryName) {
@@ -29,20 +28,21 @@ public class Country {
 
 		Country other = (Country) obj;
 
-		return new EqualsBuilder().append(this.countryName, other.countryName)
-				.isEquals();
+		return new EqualsBuilder()
+			.append(this.countryName, other.countryName)
+			.isEquals();
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(this.countryName)
-				.toHashCode();
+		return new HashCodeBuilder().append(this.countryName).toHashCode();
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("countryName", countryName)
-				.toString();
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+			.append("countryName", countryName)
+			.toString();
 	}
 
 	public String getCountryName() {
@@ -52,5 +52,4 @@ public class Country {
 	public void setCountryName(String countryName) {
 		this.countryName = countryName;
 	}
-
 }

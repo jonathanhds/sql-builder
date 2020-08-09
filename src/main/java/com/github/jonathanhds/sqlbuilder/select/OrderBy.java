@@ -2,15 +2,13 @@ package com.github.jonathanhds.sqlbuilder.select;
 
 import com.github.jonathanhds.sqlbuilder.Context;
 import com.github.jonathanhds.sqlbuilder.TerminalExpression;
-import org.apache.commons.lang.StringUtils;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.apache.commons.lang.StringUtils;
 
 public class OrderBy implements TerminalExpression {
-
 	private Context context;
 
 	private OrderByType order;

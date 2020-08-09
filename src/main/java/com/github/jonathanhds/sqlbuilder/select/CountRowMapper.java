@@ -9,5 +9,4 @@ public class CountRowMapper extends RowMapper<Integer> {
 	public Integer convert(ResultSet resultSet, int rowNum) throws SQLException {
 		return resultSet.getInt(1);
 	}
-
 }

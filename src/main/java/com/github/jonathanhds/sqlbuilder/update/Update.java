@@ -2,12 +2,10 @@ package com.github.jonathanhds.sqlbuilder.update;
 
 import com.github.jonathanhds.sqlbuilder.Context;
 import com.github.jonathanhds.sqlbuilder.IllegalQueryException;
-
 import java.util.*;
 import java.util.Map.Entry;
 
 public class Update {
-
 	private Context context;
 
 	private boolean terminated = false;
@@ -51,7 +49,9 @@ public class Update {
 	}
 
 	private void terminate() {
-		if (assignments.isEmpty()) throw new IllegalQueryException("Not contains SET statements!");
+		if (assignments.isEmpty()) throw new IllegalQueryException(
+			"Not contains SET statements!"
+		);
 
 		if (!terminated) {
 			context.append(table).appendLine(" SET");
@@ -60,11 +60,12 @@ public class Update {
 
 			while (iter.hasNext()) {
 				Entry<String, String> assignment = iter.next();
-				context.append(assignment.getKey())
-						.append(" = ")
-						.append("'")
-						.append(assignment.getValue())
-						.append("'");
+				context
+					.append(assignment.getKey())
+					.append(" = ")
+					.append("'")
+					.append(assignment.getValue())
+					.append("'");
 
 				if (iter.hasNext()) {
 					context.append(",").newLine();
@@ -95,5 +96,4 @@ public class Update {
 		terminate();
 		return context.toString();
 	}
-
 }

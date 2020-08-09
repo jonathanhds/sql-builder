@@ -1,13 +1,11 @@
 package com.github.jonathanhds.sqlbuilder.select;
 
 import com.github.jonathanhds.sqlbuilder.Context;
-import org.apache.commons.lang.StringUtils;
-
 import java.util.LinkedList;
 import java.util.List;
+import org.apache.commons.lang.StringUtils;
 
 public class Select {
-
 	private Context context;
 
 	private final List<String> columns;

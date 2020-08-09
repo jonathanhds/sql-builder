@@ -1,7 +1,6 @@
 package com.github.jonathanhds.sqlbuilder;
 
 import com.github.jonathanhds.sqlbuilder.select.RowMapper;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Context {
-
 	private static final String NEW_LINE = System.getProperty("line.separator");
 
 	private final Connection connection;
@@ -24,7 +22,7 @@ public class Context {
 
 	private final Database database;
 
-	private transient final Logger log;
+	private final transient Logger log;
 
 	{
 		this.log = Logger.getLogger(getClass().getName());
@@ -120,5 +118,4 @@ public class Context {
 
 		return statement;
 	}
-
 }

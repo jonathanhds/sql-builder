@@ -128,6 +128,14 @@
 					<goals>deploy</goals>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>com.hubspot.maven.plugins</groupId>
+				<artifactId>prettier-maven-plugin</artifactId>
+				<version>0.8</version>
+				<configuration>
+					<useTabs>true</useTabs>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

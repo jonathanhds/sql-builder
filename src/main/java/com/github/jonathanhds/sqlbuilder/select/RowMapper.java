@@ -6,9 +6,11 @@ import java.sql.SQLException;
 
 public abstract class RowMapper<E> {
 
-	public abstract E convert(ResultSet resultSet, int rowNum) throws SQLException;
+	public abstract E convert(ResultSet resultSet, int rowNum)
+		throws SQLException;
 
-	protected boolean contains(ResultSet resultSet, String columnName) throws SQLException {
+	protected boolean contains(ResultSet resultSet, String columnName)
+		throws SQLException {
 		ResultSetMetaData metaData = resultSet.getMetaData();
 		for (int i = 1; i <= metaData.getColumnCount(); i++) {
 			String metaDataColumnName = metaData.getColumnLabel(i);
@@ -18,5 +20,4 @@ public abstract class RowMapper<E> {
 		}
 		return false;
 	}
-
 }

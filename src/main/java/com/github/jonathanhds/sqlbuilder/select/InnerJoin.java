@@ -16,5 +16,4 @@ class InnerJoin extends Join {
 	protected String expression() {
 		return "INNER JOIN";
 	}
-
 }

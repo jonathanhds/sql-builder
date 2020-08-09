@@ -6,16 +6,15 @@ import com.github.jonathanhds.sqlbuilder.delete.Delete;
 import com.github.jonathanhds.sqlbuilder.insert.Insert;
 import com.github.jonathanhds.sqlbuilder.select.Select;
 import com.github.jonathanhds.sqlbuilder.update.Update;
-
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import javax.sql.DataSource;
 
 public class QueryBuilder {
-
 	private final Context context;
 
-	public QueryBuilder(Database database, DataSource dataSource) throws SQLException {
+	public QueryBuilder(Database database, DataSource dataSource)
+		throws SQLException {
 		this(database, dataSource.getConnection());
 	}
 

@@ -2,15 +2,12 @@ package com.github.jonathanhds.sqlbuilder.delete;
 
 import com.github.jonathanhds.sqlbuilder.Context;
 import com.github.jonathanhds.sqlbuilder.IllegalQueryException;
-import org.apache.commons.lang.StringUtils;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
-
+import org.apache.commons.lang.StringUtils;
 
 public class Delete {
-
 	private String table;
 	private final Context context;
 	private final Collection<String> conditions;
@@ -38,7 +35,9 @@ public class Delete {
 	}
 
 	private void terminate() {
-		if (StringUtils.isBlank(table)) throw new IllegalQueryException("No table specified!");
+		if (StringUtils.isBlank(table)) throw new IllegalQueryException(
+			"No table specified!"
+		);
 
 		if (!terminated) {
 			context.append(table);

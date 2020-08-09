@@ -16,5 +16,4 @@ class RightOuterJoin extends Join {
 	protected String expression() {
 		return "RIGHT OUTER JOIN";
 	}
-
 }

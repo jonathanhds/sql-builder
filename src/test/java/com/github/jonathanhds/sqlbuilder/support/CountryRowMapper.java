@@ -1,7 +1,6 @@
 package com.github.jonathanhds.sqlbuilder.support;
 
 import com.github.jonathanhds.sqlbuilder.select.RowMapper;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -13,5 +12,4 @@ public class CountryRowMapper extends RowMapper<Country> {
 
 		return new Country(name);
 	}
-
 }

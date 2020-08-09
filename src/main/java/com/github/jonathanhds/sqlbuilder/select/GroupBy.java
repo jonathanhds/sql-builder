@@ -2,15 +2,13 @@ package com.github.jonathanhds.sqlbuilder.select;
 
 import com.github.jonathanhds.sqlbuilder.Context;
 import com.github.jonathanhds.sqlbuilder.TerminalExpression;
-import org.apache.commons.lang.StringUtils;
-
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import org.apache.commons.lang.StringUtils;
 
 public class GroupBy implements TerminalExpression {
-
 	private final Context context;
 
 	private final List<String> columns;
@@ -92,5 +90,4 @@ public class GroupBy implements TerminalExpression {
 			terminated = true;
 		}
 	}
-
 }

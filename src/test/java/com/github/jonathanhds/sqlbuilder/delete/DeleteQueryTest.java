@@ -1,19 +1,16 @@
 package com.github.jonathanhds.sqlbuilder.delete;
 
+import static org.junit.Assert.assertEquals;
+
 import com.github.jonathanhds.sqlbuilder.Database;
 import com.github.jonathanhds.sqlbuilder.builder.QueryBuilder;
 import com.github.jonathanhds.sqlbuilder.support.MemoryDatabase;
+import java.sql.Connection;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.Connection;
-
-import static org.junit.Assert.assertEquals;
-
-
 public class DeleteQueryTest {
-
 	private static final String newLine = System.getProperty("line.separator");
 
 	private Connection connection;
@@ -21,7 +18,9 @@ public class DeleteQueryTest {
 	@Before
 	public void startConnection() throws Exception {
 		connection = new MemoryDatabase().getConnection();
-		connection.createStatement().executeQuery("SET DATABASE SQL SYNTAX ORA FALSE");
+		connection
+			.createStatement()
+			.executeQuery("SET DATABASE SQL SYNTAX ORA FALSE");
 	}
 
 	@After
@@ -37,7 +36,7 @@ public class DeleteQueryTest {
 	public void shouldCreateQuery() throws Exception {
 		// Given
 		Delete query = new QueryBuilder(Database.HSQLDB, connection)
-				.delete("person p");
+		.delete("person p");
 
 		// When
 		String actual = query.toString();
@@ -51,20 +50,20 @@ public class DeleteQueryTest {
 	public void shouldCreateQueryUsingWhere() throws Exception {
 		// Given
 		Delete query = new QueryBuilder(Database.HSQLDB, connection)
-				.delete("account a")
-				.where("a.id > 666")
-				.and("a.creation_date > '2013-01-01'");
+			.delete("account a")
+			.where("a.id > 666")
+			.and("a.creation_date > '2013-01-01'");
 
 		// When
 		String actual = query.toString();
 
 		// Then
 		String expected = new StringBuilder("DELETE FROM account a")
-				.append(newLine)
-				.append("WHERE a.id > 666")
-				.append(newLine)
-				.append("AND a.creation_date > '2013-01-01'")
-				.toString();
+			.append(newLine)
+			.append("WHERE a.id > 666")
+			.append(newLine)
+			.append("AND a.creation_date > '2013-01-01'")
+			.toString();
 		assertEquals(expected, actual);
 	}
 }

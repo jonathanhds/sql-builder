@@ -5,7 +5,6 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 abstract class Condition {
-
 	protected final Context context;
 
 	Condition(Context context) {
@@ -18,13 +17,13 @@ abstract class Condition {
 
 	void add(Object condition, Object parameter) {
 		if (parameter != null) {
-			add(condition, new Object[]{parameter});
+			add(condition, new Object[] { parameter });
 		}
 	}
 
 	void add(String condition, String parameter) {
 		if (StringUtils.isNotBlank(parameter)) {
-			add(condition, new Object[]{parameter});
+			add(condition, new Object[] { parameter });
 		}
 	}
 
@@ -50,5 +49,4 @@ abstract class Condition {
 	}
 
 	protected abstract String getPrefix();
-
 }

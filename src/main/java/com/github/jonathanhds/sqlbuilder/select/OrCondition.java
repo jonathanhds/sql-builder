@@ -12,5 +12,4 @@ class OrCondition extends Condition {
 	protected String getPrefix() {
 		return "OR";
 	}
-
 }

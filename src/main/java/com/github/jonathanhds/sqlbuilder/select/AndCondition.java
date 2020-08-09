@@ -12,5 +12,4 @@ class AndCondition extends Condition {
 	protected String getPrefix() {
 		return "AND";
 	}
-
 }

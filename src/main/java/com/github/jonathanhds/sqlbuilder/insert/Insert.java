@@ -2,14 +2,12 @@ package com.github.jonathanhds.sqlbuilder.insert;
 
 import com.github.jonathanhds.sqlbuilder.Context;
 import com.github.jonathanhds.sqlbuilder.IllegalQueryException;
-import org.apache.commons.lang.StringUtils;
-
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import org.apache.commons.lang.StringUtils;
 
 public class Insert {
-
 	private String table;
 	private final List<String> columns;
 	private final List<Object[]> values;
@@ -50,22 +48,29 @@ public class Insert {
 	}
 
 	private void terminate() {
-		if (columns.isEmpty()) throw new IllegalQueryException("No columns informed!");
-		if (values.isEmpty()) throw new IllegalQueryException("No values informed!");
+		if (columns.isEmpty()) throw new IllegalQueryException(
+			"No columns informed!"
+		);
+		if (values.isEmpty()) throw new IllegalQueryException(
+			"No values informed!"
+		);
 
 		for (Object[] valueSet : values) {
 			if (valueSet.length != columns.size()) {
-				throw new IllegalQueryException("Value size different from column size!");
+				throw new IllegalQueryException(
+					"Value size different from column size!"
+				);
 			}
 		}
 
 		if (!terminated) {
-			context.appendLine(table)
-					.append(" ( ")
-					.append(StringUtils.join(columns, ", "))
-					.appendLine(" )")
-					.append("VALUES ")
-					.append(StringUtils.join(getValues(), ", "));
+			context
+				.appendLine(table)
+				.append(" ( ")
+				.append(StringUtils.join(columns, ", "))
+				.appendLine(" )")
+				.append("VALUES ")
+				.append(StringUtils.join(getValues(), ", "));
 		}
 	}
 

@@ -17,7 +17,11 @@ public class MemoryDatabase {
 	}
 
 	public Connection getConnection() throws SQLException, IOException {
-		Connection connection = DriverManager.getConnection("jdbc:hsqldb:mem:querybuilder;sql.syntax_ora=true", "SA", "");
+		Connection connection = DriverManager.getConnection(
+			"jdbc:hsqldb:mem:querybuilder;sql.syntax_ora=true",
+			"SA",
+			""
+		);
 
 		ScriptRunner runner = new ScriptRunner(connection, true, true);
 		runner.runScript(new FileReader("src/test/resources/schema.sql"));
@@ -25,5 +29,4 @@ public class MemoryDatabase {
 
 		return connection;
 	}
-
 }
