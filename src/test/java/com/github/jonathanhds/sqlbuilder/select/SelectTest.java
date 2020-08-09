@@ -1,5 +1,6 @@
 package com.github.jonathanhds.sqlbuilder.select;
 
+import com.github.jonathanhds.sqlbuilder.builder.QueryBuilder;
 import com.github.jonathanhds.sqlbuilder.builder.QueryBuilderHSQLDB;
 import com.github.jonathanhds.sqlbuilder.builder.QueryBuilderOracle;
 import com.github.jonathanhds.sqlbuilder.support.*;
@@ -9,6 +10,7 @@ import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.List;
 import static com.github.jonathanhds.sqlbuilder.select.OrderByType.DESC;
 import static java.util.Calendar.*;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class SelectTest {
@@ -25,16 +28,31 @@ public class SelectTest {
 	@Before
 	public void startConnection() throws Exception {
 		connection = new MemoryDatabase().getConnection();
-		connection.createStatement().executeQuery("SET DATABASE SQL SYNTAX ORA FALSE");
+        try (Statement statement = connection.createStatement()) {
+            statement.executeQuery("SET DATABASE SQL SYNTAX ORA FALSE");
+        }
 	}
 
 	@After
 	public void closeConnection() throws Exception {
-		connection.createStatement().execute("SHUTDOWN");
+        try (Statement statement = connection.createStatement()) {
+            statement.execute("SHUTDOWN");
+        }
 
 		if (!connection.isClosed()) {
 			connection.close();
 		}
+	}
+
+	@Test
+	public void selectWithoutDatabase() {
+		String query = new QueryBuilder()
+				.select()
+				.all()
+				.from()
+				.table("User u")
+				.toString();
+		assertEquals(query, "SELECT\n*\nFROM\nUser u\n\n\n");
 	}
 
 	@Test
@@ -332,7 +350,9 @@ public class SelectTest {
 
 	@Test
 	public void selectAllFromTableWithPagination_Oracle() throws Exception {
-		connection.createStatement().executeQuery("SET DATABASE SQL SYNTAX ORA TRUE");
+        try (Statement statement = connection.createStatement()) {
+            statement.executeQuery("SET DATABASE SQL SYNTAX ORA TRUE");
+        }
 		List<Person> persons = new QueryBuilderOracle(connection).select()
 				.all()
 				.from()

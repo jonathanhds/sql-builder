@@ -44,6 +44,13 @@ public class Context {
 		parameters = new LinkedList<>();
 	}
 
+	public Context(Database database) {
+		this.database = database;
+		this.connection = null;
+		this.sql = new StringBuilder();
+		this.parameters = new LinkedList<>();
+	}
+
 	@Override
 	public String toString() {
 		return sql.toString();
@@ -111,14 +118,15 @@ public class Context {
 	}
 
 	private PreparedStatement prepareStatement(String sql) throws SQLException {
-		PreparedStatement statement = connection.prepareStatement(sql);
+		try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
-		int i = 1;
-		for (Object parameter : parameters) {
-			statement.setObject(i++, parameter);
+			int i = 1;
+			for (Object parameter : parameters) {
+				statement.setObject(i++, parameter);
+			}
+
+			return statement;
 		}
-
-		return statement;
 	}
 
 }
