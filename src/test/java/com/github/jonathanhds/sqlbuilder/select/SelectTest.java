@@ -46,13 +46,14 @@ public class SelectTest {
 			.table("PERSON p")
 			.list(new PersonRowMapper());
 
-		assertThat(persons, hasSize(3));
+		assertThat(persons, hasSize(4));
 		assertThat(
 			persons,
 			containsInAnyOrder(
 				jonathan().setCountry(null),
 				steveJobs().setCountry(null),
-				domPedro().setCountry(null)
+				domPedro().setCountry(null),
+				martinLutherKing().setCountry(null)
 			)
 		);
 	}
@@ -129,10 +130,15 @@ public class SelectTest {
 			.innerJoin("COUNTRY c ON c.id = p.country_id")
 			.list(new PersonRowMapper());
 
-		assertThat(persons, hasSize(3));
+		assertThat(persons, hasSize(4));
 		assertThat(
 			persons,
-			containsInAnyOrder(jonathan(), steveJobs(), domPedro())
+			containsInAnyOrder(
+				jonathan(),
+				steveJobs(),
+				domPedro(),
+				martinLutherKing()
+			)
 		);
 
 		persons =
@@ -144,10 +150,15 @@ public class SelectTest {
 				.innerJoin("COUNTRY c ON c.id = p.country_id")
 				.list(new PersonRowMapper());
 
-		assertThat(persons, hasSize(3));
+		assertThat(persons, hasSize(4));
 		assertThat(
 			persons,
-			containsInAnyOrder(jonathan(), steveJobs(), domPedro())
+			containsInAnyOrder(
+				jonathan(),
+				steveJobs(),
+				domPedro(),
+				martinLutherKing()
+			)
 		);
 
 		persons =
@@ -160,10 +171,15 @@ public class SelectTest {
 				.where("c.id = p.country_id")
 				.list(new PersonRowMapper());
 
-		assertThat(persons, hasSize(3));
+		assertThat(persons, hasSize(4));
 		assertThat(
 			persons,
-			containsInAnyOrder(jonathan(), steveJobs(), domPedro())
+			containsInAnyOrder(
+				jonathan(),
+				steveJobs(),
+				domPedro(),
+				martinLutherKing()
+			)
 		);
 
 		persons =
@@ -175,10 +191,15 @@ public class SelectTest {
 				.where("c.id = p.country_id")
 				.list(new PersonRowMapper());
 
-		assertThat(persons, hasSize(3));
+		assertThat(persons, hasSize(4));
 		assertThat(
 			persons,
-			containsInAnyOrder(jonathan(), steveJobs(), domPedro())
+			containsInAnyOrder(
+				jonathan(),
+				steveJobs(),
+				domPedro(),
+				martinLutherKing()
+			)
 		);
 
 		persons =
@@ -191,10 +212,15 @@ public class SelectTest {
 				.where("c.id = p.country_id")
 				.list(new PersonRowMapper());
 
-		assertThat(persons, hasSize(3));
+		assertThat(persons, hasSize(4));
 		assertThat(
 			persons,
-			containsInAnyOrder(jonathan(), steveJobs(), domPedro())
+			containsInAnyOrder(
+				jonathan(),
+				steveJobs(),
+				domPedro(),
+				martinLutherKing()
+			)
 		);
 	}
 
@@ -209,11 +235,12 @@ public class SelectTest {
 			.column("p.name", OrderByType.DESC)
 			.list(new PersonRowMapper());
 
-		assertThat(persons, hasSize(3));
+		assertThat(persons, hasSize(4));
 		assertThat(
 			persons,
 			contains(
 				steveJobs().setCountry(null),
+				martinLutherKing().setCountry(null),
 				jonathan().setCountry(null),
 				domPedro().setCountry(null)
 			)
@@ -256,8 +283,8 @@ public class SelectTest {
 			.column("p.birthday")
 			.list(new CountRowMapper());
 
-		assertThat(counts, hasSize(3));
-		assertThat(counts, contains(1, 1, 1));
+		assertThat(counts, hasSize(4));
+		assertThat(counts, contains(1, 1, 1, 1));
 
 		counts =
 			new QueryBuilderHSQLDB(connection)
@@ -268,8 +295,8 @@ public class SelectTest {
 				.groupBy("p.birthday")
 				.list(new CountRowMapper());
 
-		assertThat(counts, hasSize(3));
-		assertThat(counts, contains(1, 1, 1));
+		assertThat(counts, hasSize(4));
+		assertThat(counts, contains(1, 1, 1, 1));
 
 		counts =
 			new QueryBuilderHSQLDB(connection)
@@ -282,7 +309,7 @@ public class SelectTest {
 				.list(new CountRowMapper());
 
 		assertThat(counts, hasSize(2));
-		assertThat(counts, containsInAnyOrder(2, 1));
+		assertThat(counts, containsInAnyOrder(2, 2));
 	}
 
 	@Test
@@ -297,8 +324,8 @@ public class SelectTest {
 			.having("count(c.country_name) > 1")
 			.list(new CountRowMapper());
 
-		assertThat(counts, hasSize(1));
-		assertThat(counts, contains(2));
+		assertThat(counts, hasSize(2));
+		assertThat(counts, contains(2, 2));
 	}
 
 	@Test
@@ -314,8 +341,8 @@ public class SelectTest {
 			.orderBy("c.country_name", DESC)
 			.list(new CountryRowMapper());
 
-		assertThat(countries, hasSize(1));
-		assertThat(countries, contains(brazil()));
+		assertThat(countries, hasSize(2));
+		assertThat(countries, contains(usa(), brazil()));
 
 		countries =
 			new QueryBuilderHSQLDB(connection)
@@ -410,5 +437,9 @@ public class SelectTest {
 
 	private Person jonathan() {
 		return new Person("Jonathan", toDate(1988, 11, 8), brazil());
+	}
+
+	private Person martinLutherKing() {
+		return new Person("Martin Luther King", null, usa());
 	}
 }
