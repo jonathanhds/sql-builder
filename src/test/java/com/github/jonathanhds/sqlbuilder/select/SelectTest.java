@@ -94,11 +94,29 @@ public class SelectTest {
 			.table("PERSON p")
 			.where()
 			.and("p.name = ?", "Steve Jobs")
-			.and("p.birthday = ?", getNullValue())
 			.list(new PersonRowMapper());
 
 		assertThat(persons, hasSize(1));
 		assertThat(persons, containsInAnyOrder(steveJobs().setCountry(null)));
+	}
+
+	@Test
+	public void selectAllFromTableWhereConditionParameterIsNull()
+		throws Exception {
+		List<Person> persons = new QueryBuilderHSQLDB(connection)
+			.select()
+			.all()
+			.from()
+			.table("PERSON p")
+			.where()
+			.and("p.birthday = ?", getNullValue())
+			.list(new PersonRowMapper());
+
+		assertThat(persons, hasSize(1));
+		assertThat(
+			persons,
+			containsInAnyOrder(martinLutherKing().setCountry(null))
+		);
 	}
 
 	@Test

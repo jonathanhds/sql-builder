@@ -18,6 +18,8 @@ abstract class Condition {
 	void add(Object condition, Object parameter) {
 		if (parameter != null) {
 			add(condition, new Object[] { parameter });
+		} else {
+			add(extractColumnName(condition.toString()) + " IS NULL");
 		}
 	}
 
@@ -46,6 +48,24 @@ abstract class Condition {
 				add(columnName + " BETWEEN ? AND ?", start, end);
 			}
 		}
+	}
+
+	private String extractColumnName(String condition) {
+		String[] conditions = new String[] {
+			" =",
+			" >",
+			" <",
+			" IN",
+			" IS",
+			" BETWEEN"
+		};
+		String result = condition.toString();
+
+		for (String c : conditions) {
+			result = StringUtils.substringBefore(result, c);
+		}
+
+		return result;
 	}
 
 	protected abstract String getPrefix();
