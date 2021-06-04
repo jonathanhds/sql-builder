@@ -23,12 +23,6 @@ abstract class Condition {
 		}
 	}
 
-	void add(String condition, String parameter) {
-		if (StringUtils.isNotBlank(parameter)) {
-			add(condition, new Object[] { parameter });
-		}
-	}
-
 	void add(Object condition, Object... parameters) {
 		if (ArrayUtils.isNotEmpty(parameters)) {
 			context.addParameters(parameters);
