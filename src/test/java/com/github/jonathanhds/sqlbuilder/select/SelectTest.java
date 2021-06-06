@@ -7,6 +7,7 @@ import static org.junit.Assert.assertThat;
 
 import com.github.jonathanhds.sqlbuilder.builder.QueryBuilderHSQLDB;
 import com.github.jonathanhds.sqlbuilder.builder.QueryBuilderOracle;
+import com.github.jonathanhds.sqlbuilder.IllegalQueryException;
 import com.github.jonathanhds.sqlbuilder.support.*;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -131,22 +132,30 @@ public class SelectTest {
 	}
 
 	@Test
-	public void selectAllFromTableWhereConditionParameterIsNull()
+	public void selectAllFromTableWhereEqualConditionParameterIsNull()
 		throws Exception {
-		List<Person> persons = new QueryBuilderHSQLDB(connection)
+		String sql = new QueryBuilderHSQLDB(connection)
 			.select()
 			.all()
 			.from()
 			.table("PERSON p")
 			.where()
 			.and("p.birthday = ?", getNullValue())
-			.list(new PersonRowMapper());
+			.toString();
 
-		assertThat(persons, hasSize(1));
-		assertThat(
-			persons,
-			containsInAnyOrder(martinLutherKing().setCountry(null))
-		);
+		assertThat(sql, equalTo("SELECT\n*\nFROM\nPERSON p\n\n\nWHERE 1 = 1\nAND p.birthday IS NULL\n"));
+	}
+
+	@Test(expected = IllegalQueryException.class)
+	public void selectAllFromTable_shouldThrowExceptionWhenConditionIsDifferentFromEqualAndParmeterIsNull() {
+		new QueryBuilderHSQLDB(connection)
+			.select()
+			.all()
+			.from()
+			.table("PERSON p")
+			.where()
+			.and("p.birthday >= ?", getNullValue())
+			.toString();
 	}
 
 	@Test
